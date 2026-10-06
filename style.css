@@ -304,6 +304,10 @@
       color: var(--orange)
     }
 
+    .newcontact div{
+        cursor: pointer;
+    }
+
     @media(max-width:1000px) {
       .footer-top {
         grid-template-columns: 1fr 1fr

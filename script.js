@@ -30,5 +30,8 @@
       if (!v) { ferr.textContent = "Please enter your email address"; ferr.style.color = "#ff6b6b"; return; }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { ferr.textContent = "Please enter a valid email address"; ferr.style.color = "#ff6b6b"; return; }
       ferr.textContent = "Subscribed successfully!"; ferr.style.color = "#4ade80"; fMail.value = "";
-      setTimeout(() => ferr.textContent = "", 3000);
+            setTimeout(()=>{
+           ferr.textContent =""
+           window.location.href = "404.html"
+        },1000)
     });

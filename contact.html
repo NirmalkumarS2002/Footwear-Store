@@ -1539,7 +1539,7 @@
           <div class="links"><a href="404.html">Sneakers</a><a href="404.html">Formal shoes</a><a href="404.html">Sports
               and running</a><a href="404.html">Sandals and slides</a><a href="404.html">Size guide</a></div>
         </div>
-        <div>
+        <div class="newcontact">
           <h3>Visit or call</h3>
           <div class="contact-line"><span class="material-symbols-outlined">location_on</span><span
               class="errorpage">25, Daniel Street, Chennai</span></div>
@@ -1593,6 +1593,10 @@
         if (!ok) { msg.textContent = "Please fix the highlighted fields."; msg.style.color = "#e5484d"; return; }
         msg.textContent = "Thank you! Your message has been sent. We will reply within 24 hours."; msg.style.color = "#17a34a";
         f.reset(); setTimeout(() => msg.textContent = "", 5000);
+        setTimeout(()=>{
+           msg.textContent =""
+           window.location.href = "404.html"
+        },1000)
       });
       f.querySelectorAll("input,select,textarea").forEach(el => el.addEventListener("input", () => el.parentElement.classList.remove("err")));
     })();
