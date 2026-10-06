@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Solemate - My Account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,-50..200">
+<style>
+:root{--ink:#0d1b2a;--ink2:#16283d;--blue:#2740ff;--blue-d:#1a2bc4;--orange:#ff6a2b;--green:#12a05c;--red:#e5484d;--amber:#e69b00;--paper:#f1f3f8;--line:#dfe4ee;--muted:#5b6678}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Figtree",sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;overflow-x:hidden}
+h1,h2,h3,h4{font-family:"Bricolage Grotesque",sans-serif;line-height:1.1}
+img{display:block;max-width:100%}button,input,select{font-family:inherit}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+.material-symbols-outlined{font-size:22px}
+
+/* rail */
+.rail{position:fixed;left:0;top:0;bottom:0;width:250px;background:var(--ink);color:#a9b4c7;z-index:100;display:flex;flex-direction:column;padding:18px 14px;overflow:hidden}
+.brand{display:flex;align-items:center;height:48px;margin-bottom:18px;padding-left:6px;white-space:nowrap}
+.brand .mark{display:none}
+.brand img{height:34px;width:auto;margin-left:0;filter:brightness(0) invert(1);cursor:pointer}
+.grp{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#5f7089;padding:14px 12px 6px;white-space:nowrap;height:34px}
+.rail nav{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+.rail button.nv{display:flex;align-items:center;gap:16px;width:100%;padding:12px;border:none;background:transparent;color:inherit;font-weight:600;font-size:14.5px;border-radius:14px;cursor:pointer;white-space:nowrap;margin-bottom:3px;transition:.2s;text-align:left}
+.rail button.nv .material-symbols-outlined{flex-shrink:0}
+.rail button.nv:hover{background:rgba(255,255,255,.08);color:#fff}
+.rail button.nv.active{background:var(--blue);color:#fff}
+.rail .logout{margin-top:10px;border-top:1px solid #22344a;padding-top:12px;flex-shrink:0}
+.scrim{display:none}
+.rail-close{display:none;width:36px;height:36px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;place-items:center;margin-left:auto;flex-shrink:0}
+.rail-close:hover{background:var(--orange);border-color:var(--orange)}
+.side-user{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:12px;margin-top:10px;flex-shrink:0}
+.side-user .av{width:44px;height:44px}
+.side-user b{display:block;color:#fff;font-size:14px}
+.side-user small{color:#8794aa;font-size:12px}
+
+/* main */
+.main{margin-left:250px;min-height:100vh;min-width:0;max-width:100%}
+.head{position:sticky;top:0;z-index:50;background:rgba(241,243,248,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.head-in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 30px}
+.burger{display:none}
+.crumb{color:var(--muted);font-size:13px;margin-bottom:4px}
+.head h1{font-size:28px;font-weight:800;letter-spacing:-1px}
+.head-r{display:flex;align-items:center;gap:12px}
+.ib{width:38px;height:38px;border-radius:11px;border:1px solid var(--line);background:#fff;display:grid;place-items:center;cursor:pointer;color:var(--ink);position:relative;transition:.2s}
+.ib:hover{border-color:var(--blue);color:var(--blue)}
+.ib .dot{position:absolute;top:8px;right:9px;width:9px;height:9px;border-radius:50%;background:var(--orange);border:2px solid #fff}
+.me{display:flex;align-items:center;gap:10px}
+.av{width:42px;height:42px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:800;font-family:"Bricolage Grotesque",sans-serif;position:relative;overflow:hidden;flex-shrink:0}
+.av i{font-style:normal}
+.av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.me b{display:block;font-size:14px}.me small{color:var(--muted);font-size:12px}
+.pop{position:absolute;right:30px;top:72px;width:340px;background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 24px 50px rgba(13,27,42,.18);padding:18px;display:none}
+.pop.show{display:block}
+.pop h4{font-size:18px;margin-bottom:6px}
+
+.page{padding:26px 30px 60px;min-width:0;max-width:100%}
+.view{display:none;flex-direction:column;gap:22px;min-width:0;max-width:100%}.view.active{display:flex}
+.view>*{min-width:0;max-width:100%}
+
+/* tiles + stats */
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.tile{border-radius:24px;padding:24px;color:#fff;position:relative;overflow:hidden}
+.tile::after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.14)}
+.tile .material-symbols-outlined{background:rgba(255,255,255,.2);border-radius:13px;padding:10px;margin-bottom:18px;position:relative;z-index:1}
+.tile h3{font-size:32px;font-weight:800;letter-spacing:-1px}.tile p{opacity:.9;margin:4px 0 10px}.tile small{background:rgba(255,255,255,.2);padding:4px 10px;border-radius:20px;font-weight:700;font-size:12px}
+.t-blue{background:var(--blue)}.t-or{background:var(--orange)}.t-ink{background:var(--ink2)}.t-gr{background:var(--green)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.stat>.material-symbols-outlined{width:44px;height:44px;border-radius:13px;background:var(--paper);color:var(--blue);display:grid;place-items:center}
+.stat h3{font-size:28px;font-weight:800;letter-spacing:-1px}.stat p{color:var(--muted);font-size:14px;margin-top:3px}
+.stat small{font-weight:700;font-size:13px}.up{color:var(--green)}.dn{color:var(--red)}
+
+/* cards */
+.card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:24px;overflow-x:auto;min-width:0;max-width:100%}
+.ch{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.ch h2{font-size:20px;font-weight:800;letter-spacing:-.5px}
+.layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:22px;align-items:start}
+.layout>*{min-width:0;max-width:100%}
+.stack{display:flex;flex-direction:column;gap:22px;min-width:0;max-width:100%}
+.stack>*{min-width:0;max-width:100%}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px}
+.two>*{min-width:0;max-width:100%}
+.between{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.muted{color:var(--muted);font-size:13px}
+
+/* chart */
+.chart{display:flex;align-items:flex-end;gap:12px;height:230px;padding-top:6px}
+.col{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:7px;min-width:0}
+.col i{display:block;width:100%;max-width:54px;background:#dfe4f5;border-radius:12px 12px 5px 5px;transition:height .5s ease,background .2s}
+.col:hover i{background:var(--blue)}.col.hi i{background:var(--orange)}
+.col span{font-size:11.5px;font-weight:700;color:var(--muted)}.col b{font-size:12.5px;color:var(--muted);font-weight:600}
+.seg{display:flex;background:var(--paper);border-radius:30px;padding:4px}
+.seg button{border:none;background:transparent;padding:7px 15px;border-radius:30px;font-weight:700;font-size:13px;color:var(--muted);cursor:pointer}
+.seg button.active{background:var(--ink);color:#fff}
+
+/* donut */
+.donut-wrap{display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap}
+.donut{width:160px;height:160px;border-radius:50%;position:relative;flex-shrink:0}
+.donut::after{content:attr(data-c);position:absolute;inset:26px;background:#fff;border-radius:50%;display:grid;place-items:center;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:20px;text-align:center;line-height:1.1;padding:6px}
+.legend{display:grid;gap:10px;font-size:14px;font-weight:600}
+.legend span{display:flex;align-items:center;gap:9px}.legend i{width:12px;height:12px;border-radius:4px}.legend em{margin-left:auto;font-style:normal;color:var(--muted);padding-left:14px}
+
+/* tables */
+table{width:100%;border-collapse:collapse;min-width:540px}
+th{text-align:left;font-size:13px;color:var(--muted);font-weight:600;padding:10px 12px;border-bottom:2px solid var(--paper)}
+td{padding:13px 12px;border-bottom:1px solid var(--paper);font-size:14px;white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}tbody tr:hover{background:#f8f9fd}
+.cell{display:flex;align-items:center;gap:12px;min-width:max-content}.cell img{width:44px;height:44px;border-radius:12px;object-fit:cover;background:var(--paper);flex-shrink:0}
+.cell b{display:block;white-space:nowrap}.cell small,td small{color:var(--muted);font-size:12px;white-space:nowrap}
+.badge{display:inline-block;padding:5px 12px;border-radius:30px;font-size:12px;font-weight:700}
+.badge.ok{background:#e1f5ea;color:var(--green)}.badge.blue{background:#e8ebff;color:var(--blue)}.badge.low{background:#fff1d9;color:#b97a00}.badge.out{background:#fde8e9;color:var(--red)}
+.bar{height:8px;width:110px;background:var(--paper);border-radius:8px;overflow:hidden;margin-bottom:4px}.bar.full{width:100%;margin:0}
+.bar i{display:block;height:100%;border-radius:8px}.bar i.ok{background:var(--green)}.bar i.low{background:var(--amber)}.bar i.out{background:var(--red)}.bar i.blue{background:var(--blue)}.bar i.or{background:var(--orange)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--paper)}.row:last-child{border-bottom:none}
+.act{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--paper)}.act:last-child{border-bottom:none}
+.act p{font-size:14px;line-height:1.45}.act small{color:var(--muted);font-size:12px}
+.ic{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;flex-shrink:0;font-size:20px}
+.ic.blue{background:#e8ebff;color:var(--blue)}.ic.orange{background:#ffe9de;color:var(--orange)}.ic.red{background:#fde8e9;color:var(--red)}.ic.amber{background:#fff1d9;color:#b97a00}.ic.green{background:#e1f5ea;color:var(--green)}
+.target{margin-bottom:18px}.target:last-child{margin-bottom:0}
+.target .between{font-size:14px;font-weight:600;margin-bottom:8px}
+.dist{display:grid;grid-template-columns:90px minmax(0,1fr) 56px;gap:12px;align-items:center;font-size:14px;font-weight:600;margin-bottom:12px}.dist.wide{grid-template-columns:130px minmax(0,1fr) 64px}.dist span:last-child{text-align:right;color:var(--muted)}
+.code{font-family:"Bricolage Grotesque",sans-serif;background:var(--paper);padding:5px 10px;border-radius:8px;letter-spacing:.5px}
+
+/* chips, buttons */
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:8px 17px;border-radius:30px;border:1.5px solid var(--line);background:#fff;font-weight:600;font-size:13px;cursor:pointer;transition:.2s}
+.chip:hover{border-color:var(--blue)}.chip.active{background:var(--ink);border-color:var(--ink);color:#fff}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:12px;border:none;font-weight:700;font-size:14px;cursor:pointer;transition:transform .2s,background .2s;color:#fff;background:var(--blue)}
+.btn:hover{transform:translateY(-2px);background:var(--blue-d)}
+.btn-sm{padding:7px 13px;border-radius:9px;border:1.5px solid var(--line);background:#fff;font-weight:700;font-size:12px;cursor:pointer;transition:.2s}.btn-sm:hover{border-color:var(--blue);color:var(--blue)}
+.empty{display:none;text-align:center;color:var(--muted);padding:28px}
+
+/* shipping */
+.ships{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.ship{border:1px solid var(--line);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0}.ship p{color:var(--muted);font-size:14px}
+
+@media(max-width:1200px){.tiles,.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:minmax(0,1fr)}.ships{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:900px){
+  .rail{width:min(300px,82vw);transform:translateX(-100%);transition:transform .3s ease;padding:14px 12px;overflow:hidden}
+  .rail.open{transform:translateX(0)}
+  .scrim.show{display:block;position:fixed;inset:0;background:rgba(13,27,42,.55);z-index:90}
+  .main{margin-left:0;width:100%;min-width:0}
+  .burger{display:grid;flex-shrink:0}.rail-close{display:grid}
+  .head-in{padding:12px 14px;gap:10px}.head h1{font-size:22px}
+  .head-r{gap:7px;flex-shrink:0}.me{gap:6px}.me .av{width:38px;height:38px}
+  .page{width:100%;padding:18px 14px 50px}.two{grid-template-columns:minmax(0,1fr)}
+  .pop{right:12px;left:12px;width:auto;max-height:70vh;overflow-y:auto}
+  .side-user{margin-top:8px;padding:10px;border-radius:14px}
+  .side-user .av{width:40px;height:40px}.side-user b{font-size:13px}.side-user small{font-size:11px}
+  .rail .logout{margin-top:6px;padding-top:10px;padding-bottom:8px}
+}
+@media(max-width:560px){
+  .tiles,.stats,.ships{grid-template-columns:minmax(0,1fr)}
+  .head-in{padding:10px 12px}.head h1{font-size:19px}.crumb{display:none}
+  .head-r .me .txt{display:none}.head-r .ib{width:36px;height:36px}
+  .page{padding:14px 10px 45px}.legend{grid-template-columns:1fr 1fr}
+  .card{padding:16px;border-radius:18px}.ch h2{font-size:18px}
+  .chart{gap:7px;height:190px}.col span{font-size:10px}.col b{font-size:10px}
+}
+@media(max-width:420px){
+  .rail{width:85vw}.brand{height:44px;margin-bottom:10px}.brand img{height:29px}
+  .rail button.nv{gap:12px;padding:10px;font-size:13.5px}.grp{padding:10px 10px 5px}
+  .side-user{gap:9px}.side-user .av{width:38px;height:38px}
+  .head-in>.between{gap:8px !important}.burger{width:36px;height:36px}
+}
+.toplogo{width:120px;display:none}
+@media(max-width:560px){.toplogo{display:block}#title{display:none}}
+</style>
+</head>
+
+<body>
+<aside class="rail" id="rail">
+  <div class="brand"><span class="mark"><span class="material-symbols-outlined">steps</span></span><img src="./src/logo.webp" class="asidelogo" alt="Solemate logo"><button class="rail-close" id="railClose" aria-label="Close menu"><span class="material-symbols-outlined">close</span></button></div>
+  <nav id="nav">
+    <div class="grp">Main</div>
+    <button class="nv active" data-view="overview"><span class="material-symbols-outlined">space_dashboard</span>Overview</button>
+    <button class="nv" data-view="orders"><span class="material-symbols-outlined">receipt_long</span>My Orders</button>
+    <button class="nv" data-view="wishlist"><span class="material-symbols-outlined">favorite</span>Wishlist</button>
+    <button class="nv" data-view="tracking"><span class="material-symbols-outlined">local_shipping</span>Tracking</button>
+    <div class="grp">Account</div>
+    <button class="nv" data-view="rewards"><span class="material-symbols-outlined">workspace_premium</span>Rewards</button>
+    <button class="nv" data-view="insights"><span class="material-symbols-outlined">monitoring</span>Insights</button>
+  </nav>
+  <div class="side-user"><span class="av"><i class="ini">A</i><img src="./src/img13.webp" alt="" onerror="this.remove()"></span>
+    <div><b class="uname">Arun Kumar</b><small>Gold member</small></div>
+  </div>
+  <button class="nv logout" id="logout"><span class="material-symbols-outlined">logout</span>Logout</button>
+</aside>
+<div class="scrim" id="scrim"></div>
+
+<div class="main">
+  <header class="head">
+    <div class="head-in">
+      <div class="between" style="gap:14px">
+        <button class="ib burger" id="burger" aria-label="Open menu"><span class="material-symbols-outlined">menu</span></button>
+        <div>
+          <div class="crumb">My Account / <span id="crumb">Overview</span></div>
+          <h1 id="title">Overview</h1>
+          <a href="admin.html"><img src="./src/logo.webp" alt="Solemate logo" class="toplogo"></a>
+        </div>
+      </div>
+      <div class="head-r">
+        <button class="ib" id="bell" aria-label="Notifications"><span class="material-symbols-outlined">notifications</span><span class="dot"></span></button>
+        <div class="me"><span class="av"><i class="ini">A</i><img src="./src/img13.webp" alt="" onerror="this.remove()"></span>
+          <div class="txt"><b class="uname">Arun Kumar</b><small>Gold member</small></div>
+        </div>
+      </div>
+    </div>
+    <div class="pop" id="pop">
+      <h4>Notifications</h4>
+      <div class="act"><span class="material-symbols-outlined ic blue">shopping_bag</span><div><p>Your order <b>#SM-9042</b> was placed successfully</p><small>2 min ago</small></div></div>
+      <div class="act"><span class="material-symbols-outlined ic orange">local_shipping</span><div><p>Order <b>#SM-9041</b> is out for delivery</p><small>18 min ago</small></div></div>
+      <div class="act"><span class="material-symbols-outlined ic amber">sell</span><div><p>Price drop on <b>Speed Max Runner</b> in your wishlist</p><small>1 hr ago</small></div></div>
+      <div class="act"><span class="material-symbols-outlined ic amber">star</span><div><p>You earned <b>125 reward points</b></p><small>2 hr ago</small></div></div>
+      <div class="act"><span class="material-symbols-outlined ic red">undo</span><div><p>Return pickup scheduled for <b>#SM-9015</b></p><small>3 hr ago</small></div></div>
+      <div class="act"><span class="material-symbols-outlined ic green">redeem</span><div><p>Coupon <b>SNEAKER30</b> expires in 6 days</p><small>5 hr ago</small></div></div>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <!-- OVERVIEW -->
+    <section class="view active" id="overview">
+      <div class="tiles">
+        <div class="tile t-blue"><span class="material-symbols-outlined">shopping_bag</span><h3>24</h3><p>Total orders</p><small>+2 this month</small></div>
+        <div class="tile t-or"><span class="material-symbols-outlined">local_shipping</span><h3>3</h3><p>Active deliveries</p><small>1 arriving today</small></div>
+        <div class="tile t-ink"><span class="material-symbols-outlined">favorite</span><h3>8</h3><p>Wishlist items</p><small>2 price drops</small></div>
+        <div class="tile t-gr"><span class="material-symbols-outlined">workspace_premium</span><h3>1,250</h3><p>Reward points</p><small>Gold member</small></div>
+      </div>
+      <div class="layout">
+        <div class="stack">
+          <div class="card">
+            <div class="ch">
+              <h2>My spending</h2>
+              <div class="seg" id="range"><button class="active" data-r="m6">6 Months</button><button data-r="year">This year</button></div>
+            </div>
+            <div class="chart" id="chart"></div>
+          </div>
+          <div class="two">
+            <div class="card">
+              <div class="ch"><h2>Spending by category</h2></div>
+              <div class="donut-wrap">
+                <div class="donut" data-c="₹58K" style="background:conic-gradient(var(--blue) 0 42%,var(--orange) 42% 63%,var(--ink2) 63% 87%,var(--green) 87% 100%)"></div>
+                <div class="legend"><span><i style="background:var(--blue)"></i>Sneakers<em>42%</em></span><span><i style="background:var(--orange)"></i>Formals<em>21%</em></span><span><i style="background:var(--ink2)"></i>Sports<em>24%</em></span><span><i style="background:var(--green)"></i>Sandals<em>13%</em></span></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="ch"><h2>Price drop alerts</h2><span class="badge blue">4 items</span></div>
+              <div class="row"><div class="cell"><img src="./src/image_29.webp" alt="" loading="lazy"><div><b>Speed Max Runner</b><small>Now ₹2,999 (was ₹3,299)</small></div></div><button class="btn-sm errorpage">View</button></div>
+              <div class="row"><div class="cell"><img src="./src/image_7.webp" alt="" loading="lazy"><div><b>Oxford Classic</b><small>Now ₹3,499 (was ₹3,799)</small></div></div><button class="btn-sm errorpage">View</button></div>
+              <div class="row"><div class="cell"><img src="./src/image_39.webp" alt="" loading="lazy"><div><b>Cloud Slides</b><small>Now ₹749 (was ₹899)</small></div></div><button class="btn-sm errorpage">View</button></div>
+              <div class="row"><div class="cell"><img src="./src/image_6.webp" alt="" loading="lazy"><div><b>Beach Strap Sandal</b><small>Only 9 pairs left</small></div></div><button class="btn-sm errorpage">View</button></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="ch"><h2>Recent orders</h2><button class="btn-sm" data-go="orders">View all</button></div>
+            <table>
+              <thead><tr><th>Order</th><th>Item</th><th>Date</th><th>Amount</th><th>Status</th></tr></thead>
+              <tbody class="s">
+                <tr><td><b>#SM-9042</b></td><td>Street Low Classic (UK 9)</td><td>06 Oct</td><td>₹1,999</td><td><span class="badge low">Pending</span></td></tr>
+                <tr><td><b>#SM-9041</b></td><td>Air Runner X (UK 9)</td><td>05 Oct</td><td>₹2,499</td><td><span class="badge blue">Shipped</span></td></tr>
+                <tr><td><b>#SM-9040</b></td><td>Oxford Classic (UK 9)</td><td>02 Oct</td><td>₹3,799</td><td><span class="badge blue">Shipped</span></td></tr>
+                <tr><td><b>#SM-9031</b></td><td>Cloud Slides (UK 9)</td><td>28 Sep</td><td>₹899</td><td><span class="badge ok">Delivered</span></td></tr>
+                <tr><td><b>#SM-9022</b></td><td>Court Pro White (UK 9)</td><td>20 Sep</td><td>₹2,799</td><td><span class="badge ok">Delivered</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="stack">
+          <div class="card">
+            <div class="ch"><h2>My goals</h2></div>
+            <div class="target"><div class="between"><span>Platinum reward points</span><span>1,250 / 2,000</span></div><div class="bar full"><i class="blue" style="width:62%"></i></div></div>
+            <div class="target"><div class="between"><span>Orders for a free pair</span><span>7 / 10</span></div><div class="bar full"><i class="or" style="width:70%"></i></div></div>
+            <div class="target"><div class="between"><span>Profile completion</span><span>85%</span></div><div class="bar full"><i class="ok" style="width:85%"></i></div></div>
+            <div class="target"><div class="between"><span>Free delivery progress</span><span>₹1,999 / ₹2,499</span></div><div class="bar full"><i class="low" style="width:80%"></i></div></div>
+          </div>
+          <div class="card">
+            <div class="ch"><h2>Recent activity</h2></div>
+            <div class="act"><span class="material-symbols-outlined ic blue">shopping_bag</span><div><p>Your order <b>#SM-9042</b> was placed successfully</p><small>2 min ago</small></div></div>
+            <div class="act"><span class="material-symbols-outlined ic orange">local_shipping</span><div><p>Order <b>#SM-9041</b> is out for delivery</p><small>18 min ago</small></div></div>
+            <div class="act"><span class="material-symbols-outlined ic amber">sell</span><div><p>Price drop on <b>Speed Max Runner</b></p><small>1 hr ago</small></div></div>
+            <div class="act"><span class="material-symbols-outlined ic amber">star</span><div><p>You earned <b>125 reward points</b></p><small>2 hr ago</small></div></div>
+            <div class="act"><span class="material-symbols-outlined ic red">undo</span><div><p>Return pickup scheduled for <b>#SM-9015</b></p><small>3 hr ago</small></div></div>
+            <div class="act"><span class="material-symbols-outlined ic green">redeem</span><div><p>Coupon <b>SNEAKER30</b> expires in 6 days</p><small>5 hr ago</small></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MY ORDERS -->
+    <section class="view" id="orders">
+      <div class="stats">
+        <div class="stat"><span class="material-symbols-outlined">shopping_bag</span><div><h3>24</h3><p>Total orders</p></div><small class="up">+2 this month</small></div>
+        <div class="stat"><span class="material-symbols-outlined">local_shipping</span><div><h3>2</h3><p>On the way</p></div><small class="up">1 arriving today</small></div>
+        <div class="stat"><span class="material-symbols-outlined">task_alt</span><div><h3>20</h3><p>Delivered</p></div><small class="up">All on time</small></div>
+        <div class="stat"><span class="material-symbols-outlined">undo</span><div><h3>1</h3><p>Returns and refunds</p></div><small class="dn">Refund in 5 days</small></div>
+      </div>
+      <div class="card">
+        <div class="ch">
+          <h2>Order history</h2>
+          <div class="chips" id="orderChips"><button class="chip active" data-f="all">All</button><button class="chip" data-f="pending">Pending</button><button class="chip" data-f="shipped">Shipped</button><button class="chip" data-f="delivered">Delivered</button><button class="chip" data-f="returned">Returned</button></div>
+        </div>
+        <table>
+          <thead><tr><th>Order</th><th>Item</th><th>Size</th><th>Amount</th><th>Payment</th><th>Date</th><th>Status</th><th></th></tr></thead>
+          <tbody class="s" id="orderBody">
+            <tr data-status="pending"><td><b>#SM-9042</b></td><td><div class="cell"><img src="./src/image_4.webp" alt="" loading="lazy"><b>Street Low Classic</b></div></td><td>UK 9</td><td>₹1,999</td><td>UPI</td><td>06 Oct</td><td><span class="badge low">Pending</span></td><td><button class="btn-sm errorpage">Cancel</button></td></tr>
+            <tr data-status="shipped"><td><b>#SM-9041</b></td><td><div class="cell"><img src="./src/image_3.webp" alt="" loading="lazy"><b>Air Runner X</b></div></td><td>UK 9</td><td>₹2,499</td><td>UPI</td><td>05 Oct</td><td><span class="badge blue">Shipped</span></td><td><button class="btn-sm errorpage">Track</button></td></tr>
+            <tr data-status="shipped"><td><b>#SM-9040</b></td><td><div class="cell"><img src="./src/image_7.webp" alt="" loading="lazy"><b>Oxford Classic</b></div></td><td>UK 9</td><td>₹3,799</td><td>Card</td><td>02 Oct</td><td><span class="badge blue">Shipped</span></td><td><button class="btn-sm errorpage">Track</button></td></tr>
+            <tr data-status="delivered"><td><b>#SM-9031</b></td><td><div class="cell"><img src="./src/image_39.webp" alt="" loading="lazy"><b>Cloud Slides</b></div></td><td>UK 9</td><td>₹899</td><td>UPI</td><td>28 Sep</td><td><span class="badge ok">Delivered</span></td><td><button class="btn-sm errorpage">Invoice</button></td></tr>
+            <tr data-status="delivered"><td><b>#SM-9022</b></td><td><div class="cell"><img src="./src/image_5.webp" alt="" loading="lazy"><b>Court Pro White</b></div></td><td>UK 9</td><td>₹2,799</td><td>Card</td><td>20 Sep</td><td><span class="badge ok">Delivered</span></td><td><button class="btn-sm errorpage">Invoice</button></td></tr>
+            <tr data-status="returned"><td><b>#SM-9015</b></td><td><div class="cell"><img src="./src/image_29.webp" alt="" loading="lazy"><b>Speed Max Runner</b></div></td><td>UK 9</td><td>₹3,299</td><td>COD</td><td>12 Sep</td><td><span class="badge out">Returned</span></td><td><button class="btn-sm errorpage">Details</button></td></tr>
+            <tr data-status="delivered"><td><b>#SM-9008</b></td><td><div class="cell"><img src="./src/image_4.webp" alt="" loading="lazy"><b>Comfort Walk Sandal</b></div></td><td>UK 9</td><td>₹1,499</td><td>UPI</td><td>04 Sep</td><td><span class="badge ok">Delivered</span></td><td><button class="btn-sm errorpage">Invoice</button></td></tr>
+            <tr data-status="delivered"><td><b>#SM-8997</b></td><td><div class="cell"><img src="./src/image_36.webp" alt="" loading="lazy"><b>Derby Leather Brown</b></div></td><td>UK 9</td><td>₹4,199</td><td>Card</td><td>25 Aug</td><td><span class="badge ok">Delivered</span></td><td><button class="btn-sm errorpage">Invoice</button></td></tr>
+            <tr data-status="delivered"><td><b>#SM-8990</b></td><td><div class="cell"><img src="./src/image_6.webp" alt="" loading="lazy"><b>Beach Strap Sandal</b></div></td><td>UK 9</td><td>₹1,299</td><td>Net banking</td><td>18 Aug</td><td><span class="badge ok">Delivered</span></td><td><button class="btn-sm errorpage">Invoice</button></td></tr>
+          </tbody>
+        </table>
+        <p class="empty">No orders match your filter.</p>
+      </div>
+    </section>
+
+    <!-- WISHLIST -->
+    <section class="view" id="wishlist">
+      <div class="stats">
+        <div class="stat"><span class="material-symbols-outlined">favorite</span><div><h3>8</h3><p>Saved items</p></div><small class="up">+2 this month</small></div>
+        <div class="stat"><span class="material-symbols-outlined">sell</span><div><h3>3</h3><p>Price drops</p></div><small class="up">Save up to ₹300</small></div>
+        <div class="stat"><span class="material-symbols-outlined">inventory_2</span><div><h3>2</h3><p>Low stock</p></div><small class="dn">Buy soon</small></div>
+        <div class="stat"><span class="material-symbols-outlined">notifications_active</span><div><h3>1</h3><p>Out of stock</p></div><small class="dn">Notify me enabled</small></div>
+      </div>
+      <div class="card">
+        <div class="ch">
+          <h2>My wishlist</h2>
+          <div class="chips" id="wishChips"><button class="chip active" data-f="all">All</button><button class="chip" data-f="sneakers">Sneakers</button><button class="chip" data-f="formals">Formals</button><button class="chip" data-f="sports">Sports</button><button class="chip" data-f="sandals">Sandals</button></div>
+          <button class="btn errorpage"><span class="material-symbols-outlined">storefront</span>Browse shop</button>
+        </div>
+        <table>
+          <thead><tr><th>Product</th><th>Category</th><th>Sizes</th><th>Availability</th><th>Price</th><th>Status</th><th></th></tr></thead>
+          <tbody class="s" id="wishBody">
+            <tr data-cat="sneakers"><td><div class="cell"><img src="./src/image_3.webp" alt="" loading="lazy"><div><b>Air Runner X</b><small>SN-1001</small></div></div></td><td>Sneakers</td><td>UK 6-11</td><td><div class="bar"><i class="ok" style="width:74%"></i></div><small>Ready to ship</small></td><td>₹2,499</td><td><span class="badge ok">In stock</span></td><td><button class="btn-sm errorpage">Add to cart</button> <button class="ib del errorpage" title="Remove" aria-label="Remove"><span class="material-symbols-outlined">delete</span></button></td></tr>
+            <tr data-cat="sneakers"><td><div class="cell"><img src="./src/image_5.webp" alt="" loading="lazy"><div><b>Court Pro White</b><small>SN-1003</small></div></div></td><td>Sneakers</td><td>UK 6-12</td><td><div class="bar"><i class="ok" style="width:66%"></i></div><small>Ready to ship</small></td><td>₹2,799</td><td><span class="badge ok">In stock</span></td><td><button class="btn-sm errorpage">Add to cart</button> <button class="ib del errorpage" title="Remove" aria-label="Remove"><span class="material-symbols-outlined">delete</span></button></td></tr>
+            <tr data-cat="formals"><td><div class="cell"><img src="./src/image_7.webp" alt="" loading="lazy"><div><b>Oxford Classic</b><small>FM-2001</small></div></div></td><td>Formals</td><td>UK 6-12</td><td><div class="bar"><i class="low" style="width:18%"></i></div><small>Only 18 left</small></td><td>₹3,499</td><td><span class="badge low">Low stock</span></td><td><button class="btn-sm errorpage">Add to cart</button> <button class="ib del errorpage" title="Remove" aria-label="Remove"><span class="material-symbols-outlined">delete</span></button></td></tr>
+            <tr data-cat="formals"><td><div class="cell"><img src="./src/image_36.webp" alt="" loading="lazy"><div><b>Derby Leather Brown</b><small>FM-2002</small></div></div></td><td>Formals</td><td>UK 6-11</td><td><div class="bar"><i class="ok" style="width:60%"></i></div><small>Ready to ship</small></td><td>₹4,199</td><td><span class="badge ok">In stock</span></td><td><button class="btn-sm errorpage">Add to cart</button> <button class="ib del errorpage" title="Remove" aria-label="Remove"><span class="material-symbols-outlined">delete</span></button></td></tr>
+            <tr data-cat="sports"><td><div class="cell"><img src="./src/image_29.webp" alt="" loading="lazy"><div><b>Speed Max Runner</b><small>SP-3001</small></div></div></td><td>Sports</td><td>UK 6-12</td><td><div class="bar"><i class="low" style="width:10%"></i></div><small>Only 12 left</small></td><td>₹2,999</td><td><span class="badge blue">Price drop</span></td><td><button class="btn-sm errorpage">Add to cart</button> <button class="ib del errorpage" title="Remove" aria-label="Remove"><span class="material-symbols-outlined">delete</span></button></td></tr>
+            <tr data-cat="sports"><td><div class="cell"><img src="./src/image_34.webp" alt="" loading="lazy"><div><b>Trail Pro Boots</b><small>SP-3002</small></div></div></td><td>Sports</td><td>UK 7-12</td><td><div class="bar"><i class="out" style="width:0%"></i></div><small>Back soon</small></td><td>₹4,299</td><td><span class="badge out">Out of stock</span></td><td><button class="btn-sm errorpage">Notify me</button> <button class="ib del errorpage" title="Remove" aria-label="Remove"><span class="material-symbols-outlined">delete</span></button></td></tr>
+            <tr data-cat="sandals"><td><div class="cell"><img src="./src/image_39.webp" alt="" loading="lazy"><div><b>Cloud Slides</b><small>SD-4001</small></div></div></td><td>Sandals</td><td>UK 5-11</td><td><div class="bar"><i class="ok" style="width:81%"></i></div><small>Ready to ship</small></td><td>₹749</td><td><span class="badge blue">Price drop</span></td><td><button class="btn-sm errorpage">Add to cart</button> <button class="ib del errorpage" title="Remove" aria-label="Remove"><span class="material-symbols-outlined">delete</span></button></td></tr>
+            <tr data-cat="sandals"><td><div class="cell"><img src="./src/image_6.webp" alt="" loading="lazy"><div><b>Beach Strap Sandal</b><small>SD-4003</small></div></div></td><td>Sandals</td><td>UK 5-10</td><td><div class="bar"><i class="low" style="width:11%"></i></div><small>Only 9 left</small></td><td>₹1,299</td><td><span class="badge low">Low stock</span></td><td><button class="btn-sm errorpage">Add to cart</button> <button class="ib del errorpage" title="Remove" aria-label="Remove"><span class="material-symbols-outlined">delete</span></button></td></tr>
+          </tbody>
+        </table>
+        <p class="empty">No wishlist items match your filter.</p>
+      </div>
+    </section>
+
+    <!-- TRACKING -->
+    <section class="view" id="tracking">
+      <div class="stats">
+        <div class="stat"><span class="material-symbols-outlined">local_shipping</span><div><h3>3</h3><p>Active shipments</p></div><small class="up">On schedule</small></div>
+        <div class="stat"><span class="material-symbols-outlined">today</span><div><h3>1</h3><p>Arriving today</p></div><small class="up">Out for delivery</small></div>
+        <div class="stat"><span class="material-symbols-outlined">done_all</span><div><h3>2</h3><p>Delivered this month</p></div><small class="up">All on time</small></div>
+        <div class="stat"><span class="material-symbols-outlined">undo</span><div><h3>1</h3><p>Returns in progress</p></div><small class="dn">Refund pending</small></div>
+      </div>
+      <div class="card">
+        <div class="ch"><h2>My shipments</h2></div>
+        <div class="ships">
+          <div class="ship"><div class="between"><b>SH-5503</b><span class="badge low">Out for delivery</span></div><p>Order #SM-9041 · Chennai city, same day</p><div class="bar full"><i class="blue" style="width:90%"></i></div><div class="between muted"><span>Local rider</span><span>Arrives today</span></div></div>
+          <div class="ship"><div class="between"><b>SH-5502</b><span class="badge blue">In transit</span></div><p>Order #SM-9040 · Bengaluru to Chennai</p><div class="bar full"><i class="blue" style="width:40%"></i></div><div class="between muted"><span>Blue Dart</span><span>Arrives in 2 days</span></div></div>
+          <div class="ship"><div class="between"><b>SH-5504</b><span class="badge blue">Packed</span></div><p>Order #SM-9042 · Chennai warehouse</p><div class="bar full"><i class="blue" style="width:15%"></i></div><div class="between muted"><span>Delhivery</span><span>Ships tomorrow</span></div></div>
+          <div class="ship"><div class="between"><b>SH-5498</b><span class="badge ok">Delivered</span></div><p>Order #SM-9031 · Chennai to Chennai</p><div class="bar full"><i class="ok" style="width:100%"></i></div><div class="between muted"><span>DTDC</span><span>Delivered 1 Oct</span></div></div>
+          <div class="ship"><div class="between"><b>SH-5495</b><span class="badge ok">Delivered</span></div><p>Order #SM-9022 · Chennai to Chennai</p><div class="bar full"><i class="ok" style="width:100%"></i></div><div class="between muted"><span>Delhivery</span><span>Delivered 24 Sep</span></div></div>
+          <div class="ship"><div class="between"><b>SH-5480</b><span class="badge out">Return pickup</span></div><p>Order #SM-9015 · Return to warehouse</p><div class="bar full"><i class="out" style="width:30%"></i></div><div class="between muted"><span>Ecom Express</span><span>Refund in 5 days</span></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch"><h2>Courier summary</h2></div>
+        <table>
+          <thead><tr><th>Courier</th><th>My parcels</th><th>Average delivery</th><th>On-time rate</th></tr></thead>
+          <tbody class="s">
+            <tr><td><b>Delhivery</b></td><td>6</td><td>2.4 days</td><td>96%</td></tr>
+            <tr><td><b>Blue Dart</b></td><td>4</td><td>1.9 days</td><td>98%</td></tr>
+            <tr><td><b>DTDC</b></td><td>3</td><td>3.1 days</td><td>91%</td></tr>
+            <tr><td><b>Ecom Express</b></td><td>1</td><td>3.4 days</td><td>88%</td></tr>
+            <tr><td><b>Local rider</b></td><td>10</td><td>Same day</td><td>99%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- REWARDS -->
+    <section class="view" id="rewards">
+      <div class="stats">
+        <div class="stat"><span class="material-symbols-outlined">stars</span><div><h3>1,250</h3><p>Points balance</p></div><small class="up">+125 this week</small></div>
+        <div class="stat"><span class="material-symbols-outlined">workspace_premium</span><div><h3>Gold</h3><p>Member tier</p></div><small class="up">750 pts to Platinum</small></div>
+        <div class="stat"><span class="material-symbols-outlined">savings</span><div><h3>₹4,320</h3><p>Total saved</p></div><small class="up">+₹300 this month</small></div>
+        <div class="stat"><span class="material-symbols-outlined">redeem</span><div><h3>3</h3><p>Coupons available</p></div><small class="dn">1 expires soon</small></div>
+      </div>
+      <div class="card">
+        <div class="ch"><h2>Points history</h2></div>
+        <table>
+          <thead><tr><th>Date</th><th>Activity</th><th>Points</th><th>Status</th></tr></thead>
+          <tbody class="s">
+            <tr><td>05 Oct</td><td>Order <b>#SM-9041</b></td><td>+125</td><td><span class="badge ok">Earned</span></td></tr>
+            <tr><td>28 Sep</td><td>Order <b>#SM-9031</b></td><td>+45</td><td><span class="badge ok">Earned</span></td></tr>
+            <tr><td>20 Sep</td><td>Redeemed on <b>#SM-9022</b></td><td>-200</td><td><span class="badge blue">Redeemed</span></td></tr>
+            <tr><td>12 Sep</td><td>Return <b>#SM-9015</b></td><td>-165</td><td><span class="badge out">Reversed</span></td></tr>
+            <tr><td>04 Sep</td><td>Order <b>#SM-9008</b></td><td>+75</td><td><span class="badge ok">Earned</span></td></tr>
+            <tr><td>01 Sep</td><td>Birthday bonus</td><td>+100</td><td><span class="badge ok">Earned</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="ch"><h2>My coupons</h2></div>
+        <table>
+          <thead><tr><th>Code</th><th>Offer</th><th>Expires</th><th></th></tr></thead>
+          <tbody class="s">
+            <tr><td><b class="code">SNEAKER30</b></td><td>30% off sneakers</td><td>12 Oct 2026</td><td><button class="btn-sm errorpage">Apply</button></td></tr>
+            <tr><td><b class="code">FREESHIP</b></td><td>Free delivery above ₹999</td><td>30 Nov 2026</td><td><button class="btn-sm errorpage">Apply</button></td></tr>
+            <tr><td><b class="code">GOLD5</b></td><td>Extra 5% off for Gold members</td><td>31 Dec 2026</td><td><button class="btn-sm errorpage">Apply</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- INSIGHTS -->
+    <section class="view" id="insights">
+      <div class="stats">
+        <div class="stat"><span class="material-symbols-outlined">payments</span><div><h3>₹58,400</h3><p>Total spent</p></div><small class="up">+₹2,499 this month</small></div>
+        <div class="stat"><span class="material-symbols-outlined">receipt</span><div><h3>₹2,433</h3><p>Average order value</p></div><small class="up">+₹120 this month</small></div>
+        <div class="stat"><span class="material-symbols-outlined">savings</span><div><h3>₹4,320</h3><p>Saved with offers</p></div><small class="up">+₹300 this month</small></div>
+        <div class="stat"><span class="material-symbols-outlined">undo</span><div><h3>4%</h3><p>Return rate</p></div><small class="up">Below average</small></div>
+      </div>
+      <div class="two">
+        <div class="card">
+          <div class="ch"><h2>Spending by month</h2><span class="badge blue">2026</span></div>
+          <div class="chart" id="chartYear"></div>
+        </div>
+        <div class="card">
+          <div class="ch"><h2>Payment methods</h2></div>
+          <div class="donut-wrap">
+            <div class="donut" data-c="UPI 52%" style="background:conic-gradient(var(--blue) 0 52%,var(--orange) 52% 76%,var(--green) 76% 94%,var(--ink2) 94% 100%)"></div>
+            <div class="legend"><span><i style="background:var(--blue)"></i>UPI<em>52%</em></span><span><i style="background:var(--orange)"></i>Cards<em>24%</em></span><span><i style="background:var(--green)"></i>Cash<em>18%</em></span><span><i style="background:var(--ink2)"></i>Banking<em>6%</em></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="two">
+        <div class="card">
+          <div class="ch"><h2>My shoe sizes</h2></div>
+          <div class="dist"><span>UK 9</span><div class="bar full"><i class="blue" style="width:58%"></i></div><span>58%</span></div>
+          <div class="dist"><span>UK 8</span><div class="bar full"><i class="blue" style="width:21%"></i></div><span>21%</span></div>
+          <div class="dist"><span>UK 10</span><div class="bar full"><i class="blue" style="width:13%"></i></div><span>13%</span></div>
+          <div class="dist"><span>UK 7</span><div class="bar full"><i class="blue" style="width:8%"></i></div><span>8%</span></div>
+        </div>
+        <div class="card">
+          <div class="ch"><h2>My shopping journey</h2></div>
+          <div class="dist wide"><span>Products viewed</span><div class="bar full"><i class="or" style="width:100%"></i></div><span>120</span></div>
+          <div class="dist wide"><span>Wishlisted</span><div class="bar full"><i class="or" style="width:30%"></i></div><span>36</span></div>
+          <div class="dist wide"><span>Added to cart</span><div class="bar full"><i class="or" style="width:25%"></i></div><span>30</span></div>
+          <div class="dist wide"><span>Checkout started</span><div class="bar full"><i class="or" style="width:22%"></i></div><span>26</span></div>
+          <div class="dist wide"><span>Orders placed</span><div class="bar full"><i class="or" style="width:20%"></i></div><span>24</span></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+const titles={overview:"Overview",orders:"My Orders",wishlist:"Wishlist",tracking:"Tracking",rewards:"Rewards",insights:"Insights"};
+
+/* navigation */
+function showView(id){
+  $$(".view").forEach(v=>v.classList.toggle("active",v.id===id));
+  $$("#nav .nv").forEach(b=>b.classList.toggle("active",b.dataset.view===id));
+  $("#title").textContent=titles[id];$("#crumb").textContent=titles[id];
+  runFilters();closeRail();$("#pop").classList.remove("show");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+$$("#nav .nv").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.view)));
+$$("[data-go]").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.go)));
+function closeRail(){$("#rail").classList.remove("open");$("#scrim").classList.remove("show");}
+$("#burger").addEventListener("click",()=>{$("#rail").classList.add("open");$("#scrim").classList.add("show");});
+$("#scrim").addEventListener("click",closeRail);
+$("#railClose").addEventListener("click",closeRail);
+$("#logout").addEventListener("click",()=>{window.location.href="index.html";});
+
+/* user */
+try{const e=localStorage.getItem("useremail");if(e)$$(".uname").forEach(n=>n.textContent=e.split("@")[0]);}catch(e){}
+const initial=$(".uname").textContent.trim().charAt(0).toUpperCase();
+$$(".av .ini").forEach(i=>i.textContent=initial);
+
+/* notifications */
+$("#bell").addEventListener("click",e=>{e.stopPropagation();$("#pop").classList.toggle("show");});
+document.addEventListener("click",e=>{if(!e.target.closest("#pop"))$("#pop").classList.remove("show");});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#pop").classList.remove("show");});
+
+/* charts */
+function draw(el,labels,vals,unit,hi){
+  const max=Math.max(...vals);
+  el.innerHTML=labels.map((l,i)=>'<div class="col'+(i===hi?' hi':'')+'"><span>'+unit.pre+vals[i]+unit.suf+'</span><i style="height:'+Math.round(vals[i]/max*78)+'%"></i><b>'+l+'</b></div>').join("");
+}
+const data={
+  m6:{l:["May","Jun","Jul","Aug","Sep","Oct"],v:[6.2,3.9,4.8,5.5,7.0,6.3],u:{pre:"₹",suf:"K"},h:4},
+  year:{l:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct"],v:[3.2,2.8,5.1,2.4,6.2,3.9,4.8,5.5,7.0,6.3],u:{pre:"₹",suf:"K"},h:8}
+};
+function setRange(r){const d=data[r];draw($("#chart"),d.l,d.v,d.u,d.h);}
+$$("#range button").forEach(b=>b.addEventListener("click",()=>{$$("#range button").forEach(x=>x.classList.remove("active"));b.classList.add("active");setRange(b.dataset.r);}));
+setRange("m6");
+draw($("#chartYear"),data.year.l,data.year.v,data.year.u,data.year.h);
+
+/* filters */
+const filt={wishlist:"all",orders:"all"};
+function runFilters(){
+  $$(".view.active tbody.s").forEach(body=>{
+    let n=0;
+    [...body.rows].forEach(r=>{
+      let ok=true;
+      if(body.id==="wishBody"&&filt.wishlist!=="all")ok=r.dataset.cat===filt.wishlist;
+      if(body.id==="orderBody"&&filt.orders!=="all")ok=r.dataset.status===filt.orders;
+      r.style.display=ok?"":"none";if(ok)n++;
+    });
+    const em=body.closest(".card").querySelector(".empty");if(em)em.style.display=n?"none":"block";
+  });
+}
+[["#wishChips","wishlist"],["#orderChips","orders"]].forEach(([sel,key])=>$$(sel+" .chip").forEach(c=>c.addEventListener("click",()=>{
+  $$(sel+" .chip").forEach(x=>x.classList.remove("active"));c.classList.add("active");filt[key]=c.dataset.f;runFilters();
+})));
+
+/* pages not built yet go to 404 */
+$$(".errorpage").forEach(el=>el.addEventListener("click",()=>location.href="404.html"));
+
+/* logo click */
+$$(".asidelogo").forEach(l=>l.addEventListener("click",()=>{location.href="admin.html";}));
+</script>
+</body>
+
+</html>

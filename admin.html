@@ -1,0 +1,2707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Solemate - Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,-50..200">
+  <style>
+    :root {
+      --ink: #0d1b2a;
+      --ink2: #16283d;
+      --blue: #2740ff;
+      --blue-d: #1a2bc4;
+      --orange: #ff6a2b;
+      --green: #12a05c;
+      --red: #e5484d;
+      --amber: #e69b00;
+      --paper: #f1f3f8;
+      --line: #dfe4ee;
+      --muted: #5b6678
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    body {
+      font-family: "Figtree", sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: "Bricolage Grotesque", sans-serif;
+      line-height: 1.1
+    }
+
+    img {
+      display: block;
+      max-width: 100%
+    }
+
+    button,
+    input,
+    select {
+      font-family: inherit
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--orange);
+      outline-offset: 2px
+    }
+
+    .material-symbols-outlined {
+      font-size: 22px
+    }
+
+    /* rail */
+    .rail {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 250px;
+      background: var(--ink);
+      color: #a9b4c7;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      padding: 18px 14px;
+      overflow: hidden
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      height: 48px;
+      margin-bottom: 18px;
+      padding-left: 6px;
+      white-space: nowrap
+    }
+
+    .brand .mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: var(--orange);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0
+    }
+
+    .brand .mark {
+      display: none
+    }
+
+    .brand img {
+      height: 34px;
+      width: auto;
+      margin-left: 0;
+      filter: brightness(0) invert(1)
+    }
+
+    .grp {
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #5f7089;
+      padding: 14px 12px 6px;
+      white-space: nowrap;
+      height: 34px
+    }
+
+    .rail nav {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: none
+    }
+
+    .rail button.nv {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: transparent;
+      color: inherit;
+      font-weight: 600;
+      font-size: 14.5px;
+      border-radius: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+      margin-bottom: 3px;
+      transition: .2s;
+      text-align: left
+    }
+
+    .rail button.nv .material-symbols-outlined {
+      flex-shrink: 0
+    }
+
+    .rail button.nv:hover {
+      background: rgba(255, 255, 255, .08);
+      color: #fff
+    }
+
+    .rail button.nv.active {
+      background: var(--blue);
+      color: #fff
+    }
+
+    .rail .logout {
+      margin-top: 10px;
+      border-top: 1px solid #22344a;
+      padding-top: 12px;
+      flex-shrink: 0
+    }
+
+    .scrim {
+      display: none
+    }
+
+    .rail-close {
+      display: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, .2);
+      background: rgba(255, 255, 255, .08);
+      color: #fff;
+      cursor: pointer;
+      place-items: center;
+      margin-left: auto;
+      flex-shrink: 0
+    }
+
+    .rail-close:hover {
+      background: var(--orange);
+      border-color: var(--orange)
+    }
+
+    .side-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, .07);
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 16px;
+      padding: 12px;
+      margin-top: 10px;
+      flex-shrink: 0
+    }
+
+    .side-user .av {
+      width: 44px;
+      height: 44px
+    }
+
+    .side-user b {
+      display: block;
+      color: #fff;
+      font-size: 14px
+    }
+
+    .side-user small {
+      color: #8794aa;
+      font-size: 12px
+    }
+
+    /* main */
+    .main {
+      margin-left: 250px;
+      min-height: 100vh;
+      min-width: 0;
+      max-width: 100%
+    }
+
+    .head {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(241, 243, 248, .92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line)
+    }
+
+    .head-in {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 30px
+    }
+
+    .burger {
+      display: none
+    }
+
+    .crumb {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 4px
+    }
+
+    .head h1 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -1px
+    }
+
+    .head-r {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .date {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap
+    }
+
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 10px 16px
+    }
+
+    .search input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font: 500 14px "Figtree", sans-serif;
+      width: 180px
+    }
+
+    .search .material-symbols-outlined {
+      font-size: 19px;
+      color: var(--muted)
+    }
+
+    .ib {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      border: 1px solid var(--line);
+      background: #fff;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      color: var(--ink);
+      position: relative;
+      transition: .2s
+    }
+
+    .ib:hover {
+      border-color: var(--blue);
+      color: var(--blue)
+    }
+
+    .ib .dot {
+      position: absolute;
+      top: 8px;
+      right: 9px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--orange);
+      border: 2px solid #fff
+    }
+
+    .me {
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .av {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-family: "Bricolage Grotesque", sans-serif;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0
+    }
+
+    .av i {
+      font-style: normal
+    }
+
+    .av img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .av.sm {
+      width: 36px;
+      height: 36px;
+      font-size: 14px;
+      background: var(--orange)
+    }
+
+    .me b {
+      display: block;
+      font-size: 14px
+    }
+
+    .me small {
+      color: var(--muted);
+      font-size: 12px
+    }
+
+    .pop {
+      position: absolute;
+      right: 30px;
+      top: 72px;
+      width: 340px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: 0 24px 50px rgba(13, 27, 42, .18);
+      padding: 18px;
+      display: none
+    }
+
+    .pop.show {
+      display: block
+    }
+
+    .pop h4 {
+      font-size: 18px;
+      margin-bottom: 6px
+    }
+
+    .page {
+      padding: 26px 30px 60px;
+      min-width: 0;
+      max-width: 100%
+    }
+
+    .view {
+      display: none;
+      flex-direction: column;
+      gap: 22px;
+      min-width: 0;
+      max-width: 100%
+    }
+
+    .view.active {
+      display: flex
+    }
+
+    .view>* {
+      min-width: 0;
+      max-width: 100%
+    }
+
+    /* tiles + stats */
+    .tiles {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px
+    }
+
+    .tile {
+      border-radius: 24px;
+      padding: 24px;
+      color: #fff;
+      position: relative;
+      overflow: hidden
+    }
+
+    .tile::after {
+      content: "";
+      position: absolute;
+      right: -30px;
+      top: -30px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .14)
+    }
+
+    .tile .material-symbols-outlined {
+      background: rgba(255, 255, 255, .2);
+      border-radius: 13px;
+      padding: 10px;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1
+    }
+
+    .tile h3 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -1px
+    }
+
+    .tile p {
+      opacity: .9;
+      margin: 4px 0 10px
+    }
+
+    .tile small {
+      background: rgba(255, 255, 255, .2);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 12px
+    }
+
+    .t-blue {
+      background: var(--blue)
+    }
+
+    .t-or {
+      background: var(--orange)
+    }
+
+    .t-ink {
+      background: var(--ink2)
+    }
+
+    .t-gr {
+      background: var(--green)
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px
+    }
+
+    .stat {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px
+    }
+
+    .stat>.material-symbols-outlined {
+      width: 44px;
+      height: 44px;
+      border-radius: 13px;
+      background: var(--paper);
+      color: var(--blue);
+      display: grid;
+      place-items: center
+    }
+
+    .stat h3 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -1px
+    }
+
+    .stat p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 3px
+    }
+
+    .stat small {
+      font-weight: 700;
+      font-size: 13px
+    }
+
+    .up {
+      color: var(--green)
+    }
+
+    .dn {
+      color: var(--red)
+    }
+
+    /* cards */
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 24px;
+      overflow-x: auto;
+      min-width: 0;
+      max-width: 100%
+    }
+
+    .ch {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px
+    }
+
+    .ch h2 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -.5px
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+      gap: 22px;
+      align-items: start
+    }
+
+    .layout>* {
+      min-width: 0;
+      max-width: 100%
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      min-width: 0;
+      max-width: 100%
+    }
+
+    .stack>* {
+      min-width: 0;
+      max-width: 100%
+    }
+
+    .two {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 22px
+    }
+
+    .two>* {
+      min-width: 0;
+      max-width: 100%
+    }
+
+    .between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    /* chart */
+    .chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      height: 230px;
+      padding-top: 6px
+    }
+
+    .col {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 7px;
+      min-width: 0
+    }
+
+    .col i {
+      display: block;
+      width: 100%;
+      max-width: 54px;
+      background: #dfe4f5;
+      border-radius: 12px 12px 5px 5px;
+      transition: height .5s ease, background .2s
+    }
+
+    .col:hover i {
+      background: var(--blue)
+    }
+
+    .col.hi i {
+      background: var(--orange)
+    }
+
+    .col span {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--muted)
+    }
+
+    .col b {
+      font-size: 12.5px;
+      color: var(--muted);
+      font-weight: 600
+    }
+
+    .seg {
+      display: flex;
+      background: var(--paper);
+      border-radius: 30px;
+      padding: 4px
+    }
+
+    .seg button {
+      border: none;
+      background: transparent;
+      padding: 7px 15px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer
+    }
+
+    .seg button.active {
+      background: var(--ink);
+      color: #fff
+    }
+
+    /* donut */
+    .donut-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 26px;
+      flex-wrap: wrap
+    }
+
+    .donut {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      position: relative;
+      flex-shrink: 0
+    }
+
+    .donut::after {
+      content: attr(data-c);
+      position: absolute;
+      inset: 26px;
+      background: #fff;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      text-align: center;
+      line-height: 1.1;
+      padding: 6px
+    }
+
+    .legend {
+      display: grid;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 600
+    }
+
+    .legend span {
+      display: flex;
+      align-items: center;
+      gap: 9px
+    }
+
+    .legend i {
+      width: 12px;
+      height: 12px;
+      border-radius: 4px
+    }
+
+    .legend em {
+      margin-left: auto;
+      font-style: normal;
+      color: var(--muted);
+      padding-left: 14px
+    }
+
+    /* tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 540px
+    }
+
+    th {
+      text-align: left;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+      padding: 10px 12px;
+      border-bottom: 2px solid var(--paper)
+    }
+
+    td {
+      padding: 13px 12px;
+      border-bottom: 1px solid var(--paper);
+      font-size: 14px;
+      white-space: nowrap
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none
+    }
+
+    tbody tr:hover {
+      background: #f8f9fd
+    }
+
+    .cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: max-content
+    }
+
+    .cell img {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: var(--paper);
+      flex-shrink: 0
+    }
+
+    .cell .av {
+      flex-shrink: 0
+    }
+
+    .cell b {
+      display: block;
+      white-space: nowrap
+    }
+
+    .cell small,
+    td small {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 700
+    }
+
+    .badge.ok {
+      background: #e1f5ea;
+      color: var(--green)
+    }
+
+    .badge.blue {
+      background: #e8ebff;
+      color: var(--blue)
+    }
+
+    .badge.low {
+      background: #fff1d9;
+      color: #b97a00
+    }
+
+    .badge.out {
+      background: #fde8e9;
+      color: var(--red)
+    }
+
+    .bar {
+      height: 8px;
+      width: 110px;
+      background: var(--paper);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 4px
+    }
+
+    .bar.full {
+      width: 100%;
+      margin: 0
+    }
+
+    .bar i {
+      display: block;
+      height: 100%;
+      border-radius: 8px
+    }
+
+    .bar i.ok {
+      background: var(--green)
+    }
+
+    .bar i.low,
+    .bar i.amb {
+      background: var(--amber)
+    }
+
+    .bar i.out {
+      background: var(--red)
+    }
+
+    .bar i.blue {
+      background: var(--blue)
+    }
+
+    .bar i.or {
+      background: var(--orange)
+    }
+
+    select.st {
+      border: none;
+      border-radius: 30px;
+      padding: 6px 10px;
+      font: 700 12px "Figtree", sans-serif;
+      cursor: pointer
+    }
+
+    select.st.ok {
+      background: #e1f5ea;
+      color: var(--green)
+    }
+
+    select.st.blue {
+      background: #e8ebff;
+      color: var(--blue)
+    }
+
+    select.st.low {
+      background: #fff1d9;
+      color: #b97a00
+    }
+
+    select.st.out {
+      background: #fde8e9;
+      color: var(--red)
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--paper)
+    }
+
+    .row:last-child {
+      border-bottom: none
+    }
+
+    .act {
+      display: flex;
+      gap: 12px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--paper)
+    }
+
+    .act:last-child {
+      border-bottom: none
+    }
+
+    .act p {
+      font-size: 14px;
+      line-height: 1.45
+    }
+
+    .act small {
+      color: var(--muted);
+      font-size: 12px
+    }
+
+    .ic {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      font-size: 20px
+    }
+
+    .ic.blue {
+      background: #e8ebff;
+      color: var(--blue)
+    }
+
+    .ic.orange {
+      background: #ffe9de;
+      color: var(--orange)
+    }
+
+    .ic.red {
+      background: #fde8e9;
+      color: var(--red)
+    }
+
+    .ic.amber {
+      background: #fff1d9;
+      color: #b97a00
+    }
+
+    .ic.green {
+      background: #e1f5ea;
+      color: var(--green)
+    }
+
+    .target {
+      margin-bottom: 18px
+    }
+
+    .target:last-child {
+      margin-bottom: 0
+    }
+
+    .target .between {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px
+    }
+
+    .dist {
+      display: grid;
+      grid-template-columns: 90px minmax(0, 1fr) 56px;
+      gap: 12px;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px
+    }
+
+    .dist.wide {
+      grid-template-columns: 130px minmax(0, 1fr) 64px
+    }
+
+    .dist span:last-child {
+      text-align: right;
+      color: var(--muted)
+    }
+
+    /* chips, buttons */
+    .chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .chip {
+      padding: 8px 17px;
+      border-radius: 30px;
+      border: 1.5px solid var(--line);
+      background: #fff;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: .2s
+    }
+
+    .chip:hover {
+      border-color: var(--blue)
+    }
+
+    .chip.active {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #fff
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 11px 20px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform .2s, background .2s;
+      color: #fff;
+      background: var(--blue)
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      background: var(--blue-d)
+    }
+
+    .btn.or {
+      background: var(--orange)
+    }
+
+    .btn.ghost {
+      background: #fff;
+      color: var(--ink);
+      border: 1.5px solid var(--line)
+    }
+
+    .btn-sm {
+      padding: 7px 13px;
+      border-radius: 9px;
+      border: 1.5px solid var(--line);
+      background: #fff;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      transition: .2s
+    }
+
+    .btn-sm:hover {
+      border-color: var(--blue);
+      color: var(--blue)
+    }
+
+    .empty {
+      display: none;
+      text-align: center;
+      color: var(--muted);
+      padding: 28px
+    }
+
+    /* shipping */
+    .ships {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px
+    }
+
+    .ship {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 0
+    }
+
+    .ship p {
+      color: var(--muted);
+      font-size: 14px
+    }
+
+    /* forms (add product modal) */
+    .form {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 16px
+    }
+
+    .form .full {
+      grid-column: 1/-1
+    }
+
+    .f {
+      min-width: 0
+    }
+
+    .f label {
+      display: block;
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 7px
+    }
+
+    .f input,
+    .f select {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 12px;
+      border: 1.5px solid var(--line);
+      background: #fff;
+      font: 500 15px "Figtree", sans-serif;
+      color: var(--ink)
+    }
+
+    .f input:focus,
+    .f select:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(39, 64, 255, .12)
+    }
+
+    .f.err input,
+    .f.err select {
+      border-color: var(--red)
+    }
+
+    .f small {
+      display: none;
+      color: var(--red);
+      font-size: 12px;
+      margin-top: 5px
+    }
+
+    .f.err small {
+      display: block
+    }
+
+    /* modal + toast */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(13, 27, 42, .6);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 300;
+      padding: 20px
+    }
+
+    .modal.show {
+      display: flex
+    }
+
+    .mbox {
+      background: #fff;
+      border-radius: 26px;
+      padding: 30px;
+      width: 100%;
+      max-width: 520px;
+      max-height: 92vh;
+      overflow-y: auto
+    }
+
+    .mbox h2 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 6px
+    }
+
+    .mbox>p {
+      color: var(--muted);
+      margin-bottom: 20px
+    }
+
+    .macts {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 22px
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 26px;
+      left: 50%;
+      transform: translate(-50%, 30px);
+      background: var(--ink);
+      color: #fff;
+      padding: 14px 22px;
+      border-radius: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      pointer-events: none;
+      transition: .3s;
+      z-index: 400
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0)
+    }
+
+    .toast .material-symbols-outlined {
+      color: #4ade80
+    }
+
+    @media(max-width:1200px) {
+
+      .tiles,
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+      }
+
+      .layout {
+        grid-template-columns: minmax(0, 1fr)
+      }
+
+      .ships {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+      }
+
+      .date {
+        display: none
+      }
+    }
+
+    @media(max-width:900px) {
+      .rail {
+        width: min(300px, 82vw);
+        transform: translateX(-100%);
+        transition: transform .3s ease;
+        padding: 14px 12px;
+        overflow: hidden
+      }
+
+      .rail.open {
+        transform: translateX(0)
+      }
+
+      .scrim.show {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(13, 27, 42, .55);
+        z-index: 90
+      }
+
+      .main {
+        margin-left: 0;
+        width: 100%;
+        min-width: 0
+      }
+
+      .burger {
+        display: grid;
+        flex-shrink: 0
+      }
+
+      .rail-close {
+        display: grid
+      }
+
+      .head-in {
+        padding: 12px 14px;
+        gap: 10px
+      }
+
+      .head h1 {
+        font-size: 22px
+      }
+
+      .head-r {
+        gap: 7px;
+        flex-shrink: 0
+      }
+
+      .me {
+        gap: 6px
+      }
+
+      .me .av {
+        width: 38px;
+        height: 38px
+      }
+
+      .page {
+        width: 100%;
+        padding: 18px 14px 50px
+      }
+
+      .two {
+        grid-template-columns: minmax(0, 1fr)
+      }
+
+      .pop {
+        right: 12px;
+        left: 12px;
+        width: auto;
+        max-height: 70vh;
+        overflow-y: auto
+      }
+
+      .side-user {
+        margin-top: 8px;
+        padding: 10px;
+        border-radius: 14px
+      }
+
+      .side-user .av {
+        width: 40px;
+        height: 40px
+      }
+
+      .side-user b {
+        font-size: 13px
+      }
+
+      .side-user small {
+        font-size: 11px
+      }
+
+      .rail .logout {
+        margin-top: 6px;
+        padding-top: 10px;
+        padding-bottom: 8px
+      }
+    }
+
+    @media(max-width:560px) {
+
+      .tiles,
+      .stats,
+      .ships,
+      .form {
+        grid-template-columns: minmax(0, 1fr)
+      }
+
+      .head-in {
+        padding: 10px 12px
+      }
+
+      .head h1 {
+        font-size: 19px
+      }
+
+      .crumb {
+        display: none
+      }
+
+      .head-r .me .txt {
+        display: none
+      }
+
+      .head-r .ib {
+        width: 36px;
+        height: 36px
+      }
+
+      .page {
+        padding: 14px 10px 45px
+      }
+
+      .legend {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .card {
+        padding: 16px;
+        border-radius: 18px
+      }
+
+      .ch h2 {
+        font-size: 18px
+      }
+
+      .chart {
+        gap: 7px;
+        height: 190px
+      }
+
+      .col span {
+        font-size: 10px
+      }
+
+      .col b {
+        font-size: 10px
+      }
+    }
+
+    @media(max-width:420px) {
+      .rail {
+        width: 85vw
+      }
+
+      .brand {
+        height: 44px;
+        margin-bottom: 10px
+      }
+
+      .brand img {
+        height: 29px
+      }
+
+      .rail button.nv {
+        gap: 12px;
+        padding: 10px;
+        font-size: 13.5px
+      }
+
+      .grp {
+        padding: 10px 10px 5px
+      }
+
+      .side-user {
+        gap: 9px
+      }
+
+      .side-user .av {
+        width: 38px;
+        height: 38px
+      }
+
+      .head-in>.between {
+        gap: 8px !important
+      }
+
+      .burger {
+        width: 36px;
+        height: 36px
+      }
+    }
+
+    .toplogo{
+      width: 120px;
+      display: none;
+    }
+
+    @media(max-width: 560px) {
+     .toplogo{
+      display: block;
+    }
+    #title{
+      display: none;
+    }
+    }
+  </style>
+</head>
+
+<body>
+  <aside class="rail" id="rail">
+    <div class="brand"><span class="mark"><span class="material-symbols-outlined">steps</span></span><img
+        src="./src/logo.webp" class="asidelogo" alt="Solemate logo"><button class="rail-close" id="railClose"
+        aria-label="Close menu"><span class="material-symbols-outlined">close</span></button></div>
+    <nav id="nav">
+      <div class="grp">Main</div>
+      <button class="nv active" data-view="overview"><span
+          class="material-symbols-outlined">space_dashboard</span>Overview</button>
+      <button class="nv" data-view="products"><span class="material-symbols-outlined">footprint</span>Products</button>
+      <button class="nv" data-view="orders"><span class="material-symbols-outlined">receipt_long</span>Orders</button>
+      <button class="nv" data-view="shipping"><span
+          class="material-symbols-outlined">local_shipping</span>Shipping</button>
+      <div class="grp">Insights</div>
+      <button class="nv" data-view="customers"><span class="material-symbols-outlined">group</span>Customers</button>
+      <button class="nv" data-view="analytics"><span
+          class="material-symbols-outlined">monitoring</span>Analytics</button>
+    </nav>
+    <div class="side-user"><span class="av"><i class="ini">A</i><img
+          src="./src/image_26.webp" alt=""
+          onerror="this.remove()"></span>
+      <div><b class="uname">Arun Kumar</b><small>Store admin</small></div>
+    </div>
+    <button class="nv logout" id="logout"><span class="material-symbols-outlined">logout</span>Logout</button>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <div class="main">
+    <header class="head">
+      <div class="head-in">
+        <div class="between" style="gap:14px">
+          <button class="ib burger" id="burger" aria-label="Open menu"><span
+              class="material-symbols-outlined">menu</span></button>
+          <div>
+            <div class="crumb">Dashboard / <span id="crumb">Overview</span></div>
+            <h1 id="title">Overview</h1>
+         <a href="admin.html"><img src="./src/logo.webp" alt="Solemate logo" class="toplogo"></a>
+          </div>
+        </div>
+        <div class="head-r">
+          <button class="ib" id="bell" aria-label="Notifications"><span
+              class="material-symbols-outlined">notifications</span><span class="dot"></span></button>
+          <div class="me"><span class="av"><i class="ini">A</i><img
+                src="./src/image_26.webp" alt="" onerror="this.remove()"></span>
+            <div class="txt"><b class="uname">Arun Kumar</b><small>Store admin</small></div>
+          </div>
+        </div>
+      </div>
+      <div class="pop" id="pop">
+        <h4>Notifications</h4>
+        <div class="act"><span class="material-symbols-outlined ic blue">shopping_bag</span>
+          <div>
+            <p>New order <b>#SM-9041</b> from Rahul Sharma</p><small>2 min ago</small>
+          </div>
+        </div>
+        <div class="act"><span class="material-symbols-outlined ic orange">local_shipping</span>
+          <div>
+            <p>Shipment <b>SH-5503</b> is out for delivery</p><small>18 min ago</small>
+          </div>
+        </div>
+        <div class="act"><span class="material-symbols-outlined ic red">warning</span>
+          <div>
+            <p><b>Speed Max Runner</b> is running low (12 left)</p><small>1 hr ago</small>
+          </div>
+        </div>
+        <div class="act"><span class="material-symbols-outlined ic amber">star</span>
+          <div>
+            <p>New 5 star review on <b>Air Runner X</b></p><small>2 hr ago</small>
+          </div>
+        </div>
+        <div class="act"><span class="material-symbols-outlined ic red">undo</span>
+          <div>
+            <p>Return requested for <b>#SM-9035</b></p><small>3 hr ago</small>
+          </div>
+        </div>
+        <div class="act"><span class="material-symbols-outlined ic green">person_add</span>
+          <div>
+            <p><b>Sneha P.</b> created an account</p><small>5 hr ago</small>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+
+      <!-- OVERVIEW -->
+      <section class="view active" id="overview">
+        <div class="tiles">
+          <div class="tile t-blue"><span class="material-symbols-outlined">payments</span>
+            <h3>₹6.8L</h3>
+            <p>Revenue this month</p><small>+8.6% vs last month</small>
+          </div>
+          <div class="tile t-or"><span class="material-symbols-outlined">shopping_bag</span>
+            <h3>1,842</h3>
+            <p>Orders this month</p><small>+9.3% vs last month</small>
+          </div>
+          <div class="tile t-ink"><span class="material-symbols-outlined">inventory_2</span>
+            <h3>8,420</h3>
+            <p>Pairs in stock</p><small>+4.2% this month</small>
+          </div>
+          <div class="tile t-gr"><span class="material-symbols-outlined">group</span>
+            <h3>3,260</h3>
+            <p>Total customers</p><small>+124 new</small>
+          </div>
+        </div>
+        <div class="layout">
+          <div class="stack">
+            <div class="card">
+              <div class="ch">
+                <h2>Sales overview</h2>
+                <div class="seg" id="range"><button class="active" data-r="week">Week</button><button
+                    data-r="month">Month</button><button data-r="year">Year</button></div>
+              </div>
+              <div class="chart" id="chart"></div>
+            </div>
+            <div class="two">
+              <div class="card">
+                <div class="ch">
+                  <h2>Sales by category</h2>
+                </div>
+                <div class="donut-wrap">
+                  <div class="donut" data-c="₹6.8L"
+                    style="background:conic-gradient(var(--blue) 0 42%,var(--orange) 42% 63%,var(--ink2) 63% 87%,var(--green) 87% 100%)">
+                  </div>
+                  <div class="legend"><span><i style="background:var(--blue)"></i>Sneakers<em>42%</em></span><span><i
+                        style="background:var(--orange)"></i>Formals<em>21%</em></span><span><i
+                        style="background:var(--ink2)"></i>Sports<em>24%</em></span><span><i
+                        style="background:var(--green)"></i>Sandals<em>13%</em></span></div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="ch">
+                  <h2>Low stock alerts</h2><span class="badge out">4 items</span>
+                </div>
+                <div class="row">
+                  <div class="cell"><img
+                      src="./src/image_39.webp" alt="" loading="lazy">
+                    <div><b>Oxford Classic</b><small>18 pairs left</small></div>
+                  </div><button class="btn-sm restock errorpage">Restock</button>
+                </div>
+                <div class="row">
+                  <div class="cell"><img
+                      src="./src/image_4.webp" alt="" loading="lazy">
+                    <div><b>Speed Max Runner</b><small>12 pairs left</small></div>
+                  </div><button class="btn-sm restock errorpage">Restock</button>
+                </div>
+                <div class="row">
+                  <div class="cell"><img
+                      src="./src/image_6.webp" alt="" loading="lazy">
+                    <div><b>Trail Pro Boots</b><small>0 pairs left</small></div>
+                  </div><button class="btn-sm restock errorpage">Restock</button>
+                </div>
+                <div class="row">
+                  <div class="cell"><img
+                      src="./src/image_5.webp" alt="" loading="lazy">
+                    <div><b>Beach Strap Sandal</b><small>9 pairs left</small></div>
+                  </div><button class="btn-sm restock errorpage">Restock</button>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="ch">
+                <h2>Recent orders</h2><button class="btn-sm errorpage">View all</button>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Order</th>
+                    <th>Customer</th>
+                    <th>Item</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody class="s">
+                  <tr>
+                    <td><b>#SM-9041</b></td>
+                    <td>Rahul Sharma</td>
+                    <td>Air Runner X (UK 9)</td>
+                    <td>₹2,499</td>
+                    <td><span class="badge ok">Delivered</span></td>
+                  </tr>
+                  <tr>
+                    <td><b>#SM-9040</b></td>
+                    <td>Divya Menon</td>
+                    <td>Oxford Classic (UK 7)</td>
+                    <td>₹3,799</td>
+                    <td><span class="badge blue">Shipped</span></td>
+                  </tr>
+                  <tr>
+                    <td><b>#SM-9039</b></td>
+                    <td>Karthik S.</td>
+                    <td>Speed Max Runner (UK 10)</td>
+                    <td>₹3,299</td>
+                    <td><span class="badge low">Pending</span></td>
+                  </tr>
+                  <tr>
+                    <td><b>#SM-9038</b></td>
+                    <td>Priya Raman</td>
+                    <td>Cloud Slides (UK 6)</td>
+                    <td>₹899</td>
+                    <td><span class="badge ok">Delivered</span></td>
+                  </tr>
+                  <tr>
+                    <td><b>#SM-9037</b></td>
+                    <td>Arjun Mehta</td>
+                    <td>Trail Pro Boots (UK 9)</td>
+                    <td>₹4,299</td>
+                    <td><span class="badge blue">Shipped</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="stack">
+            <div class="card">
+              <div class="ch">
+                <h2>Monthly targets</h2>
+              </div>
+              <div class="target">
+                <div class="between"><span>Revenue</span><span>₹6.8L / ₹8L</span></div>
+                <div class="bar full"><i class="blue" style="width:85%"></i></div>
+              </div>
+              <div class="target">
+                <div class="between"><span>Orders</span><span>1,842 / 2,200</span></div>
+                <div class="bar full"><i class="or" style="width:84%"></i></div>
+              </div>
+              <div class="target">
+                <div class="between"><span>New customers</span><span>124 / 150</span></div>
+                <div class="bar full"><i class="ok" style="width:83%"></i></div>
+              </div>
+              <div class="target">
+                <div class="between"><span>Return rate limit</span><span>2.1% / 3%</span></div>
+                <div class="bar full"><i class="low" style="width:70%"></i></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="ch">
+                <h2>Live activity</h2>
+              </div>
+              <div class="act"><span class="material-symbols-outlined ic blue">shopping_bag</span>
+                <div>
+                  <p>New order <b>#SM-9041</b> from Rahul Sharma</p><small>2 min ago</small>
+                </div>
+              </div>
+              <div class="act"><span class="material-symbols-outlined ic orange">local_shipping</span>
+                <div>
+                  <p>Shipment <b>SH-5503</b> is out for delivery</p><small>18 min ago</small>
+                </div>
+              </div>
+              <div class="act"><span class="material-symbols-outlined ic red">warning</span>
+                <div>
+                  <p><b>Speed Max Runner</b> is running low (12 left)</p><small>1 hr ago</small>
+                </div>
+              </div>
+              <div class="act"><span class="material-symbols-outlined ic amber">star</span>
+                <div>
+                  <p>New 5 star review on <b>Air Runner X</b></p><small>2 hr ago</small>
+                </div>
+              </div>
+              <div class="act"><span class="material-symbols-outlined ic red">undo</span>
+                <div>
+                  <p>Return requested for <b>#SM-9035</b></p><small>3 hr ago</small>
+                </div>
+              </div>
+              <div class="act"><span class="material-symbols-outlined ic green">person_add</span>
+                <div>
+                  <p><b>Sneha P.</b> created an account</p><small>5 hr ago</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRODUCTS -->
+      <section class="view" id="products">
+        <div class="stats">
+          <div class="stat"><span class="material-symbols-outlined">inventory_2</span>
+            <div>
+              <h3>8,420</h3>
+              <p>Pairs in stock</p>
+            </div><small class="up">+4.2% this month</small>
+          </div>
+          <div class="stat"><span class="material-symbols-outlined">move_to_inbox</span>
+            <div>
+              <h3>640</h3>
+              <p>Incoming stock</p>
+            </div><small class="up">Arriving this week</small>
+          </div>
+          <div class="stat"><span class="material-symbols-outlined">checkroom</span>
+            <div>
+              <h3>250</h3>
+              <p>Active styles</p>
+            </div><small class="up">+6 new styles</small>
+          </div>
+          <div class="stat"><span class="material-symbols-outlined">warning</span>
+            <div>
+              <h3>3</h3>
+              <p>Low or out of stock</p>
+            </div><small class="dn">Needs restock</small>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ch">
+            <h2>All products</h2>
+            <div class="chips" id="prodChips"><button class="chip active" data-f="all">All</button><button class="chip"
+                data-f="sneakers">Sneakers</button><button class="chip" data-f="formals">Formals</button><button
+                class="chip" data-f="sports">Sports</button><button class="chip" data-f="sandals">Sandals</button></div>
+            <button class="btn errorpage" id="addProd"><span class="material-symbols-outlined">add</span>Add product</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Sizes</th>
+                <th>Stock</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody class="s" id="prodBody">
+              <tr data-cat="sneakers">
+                <td>
+                  <div class="cell"><img
+                      src="./src/image_3.webp"
+                      alt="" loading="lazy">
+                    <div><b>Air Runner X</b><small>SN-1001</small></div>
+                  </div>
+                </td>
+                <td>Sneakers</td>
+                <td>UK 6-11</td>
+                <td>
+                  <div class="bar"><i class="ok" style="width:74%"></i></div><small>148 pairs</small>
+                </td>
+                <td>₹2,499</td>
+                <td><span class="badge ok">In stock</span></td>
+                <td><button class="ib del errorpage" title="Delete" aria-label="Delete"><span
+                      class="material-symbols-outlined">delete</span></button></td>
+              </tr>
+              <tr data-cat="sneakers">
+                <td>
+                  <div class="cell"><img
+                      src="./src/image_4.webp"
+                      alt="" loading="lazy">
+                    <div><b>Street Low Classic</b><small>SN-1002</small></div>
+                  </div>
+                </td>
+                <td>Sneakers</td>
+                <td>UK 5-11</td>
+                <td>
+                  <div class="bar"><i class="ok" style="width:57%"></i></div><small>86 pairs</small>
+                </td>
+                <td>₹1,999</td>
+                <td><span class="badge ok">In stock</span></td>
+                <td><button class="ib del errorpage" title="Delete" aria-label="Delete"><span
+                      class="material-symbols-outlined">delete</span></button></td>
+              </tr>
+              <tr data-cat="sneakers">
+                <td>
+                  <div class="cell"><img
+                      src="./src/image_5.webp"
+                      alt="" loading="lazy">
+                    <div><b>Court Pro White</b><small>SN-1003</small></div>
+                  </div>
+                </td>
+                <td>Sneakers</td>
+                <td>UK 6-12</td>
+                <td>
+                  <div class="bar"><i class="ok" style="width:66%"></i></div><small>92 pairs</small>
+                </td>
+                <td>₹2,799</td>
+                <td><span class="badge ok">In stock</span></td>
+                <td><button class="ib del errorpage" title="Delete" aria-label="Delete"><span
+                      class="material-symbols-outlined">delete</span></button></td>
+              </tr>
+              <tr data-cat="formals">
+                <td>
+                  <div class="cell"><img
+                      src="./src/image_7.webp"
+                      alt="" loading="lazy">
+                    <div><b>Oxford Classic</b><small>FM-2001</small></div>
+                  </div>
+                </td>
+                <td>Formals</td>
+                <td>UK 6-12</td>
+                <td>
+                  <div class="bar"><i class="low" style="width:18%"></i></div><small>18 pairs</small>
+                </td>
+                <td>₹3,799</td>
+                <td><span class="badge low">Low stock</span></td>
+                <td><button class="ib del errorpage" title="Delete" aria-label="Delete"><span
+                      class="material-symbols-outlined">delete</span></button></td>
+              </tr>
+              <tr data-cat="formals">
+                <td>
+                  <div class="cell"><img
+                      src="./src/image_36.webp"
+                      alt="" loading="lazy">
+                    <div><b>Derby Leather Brown</b><small>FM-2002</small></div>
+                  </div>
+                </td>
+                <td>Formals</td>
+                <td>UK 6-11</td>
+                <td>
+                  <div class="bar"><i class="ok" style="width:60%"></i></div><small>54 pairs</small>
+                </td>
+                <td>₹4,199</td>
+                <td><span class="badge ok">In stock</span></td>
+                <td><button class="ib del errorpage" title="Delete" aria-label="Delete"><span
+                      class="material-symbols-outlined">delete</span></button></td>
+              </tr>
+              <tr data-cat="sports">
+                <td>
+                  <div class="cell"><img
+                      src="./src/image_29.webp"
+                      alt="" loading="lazy">
+                    <div><b>Speed Max Runner</b><small>SP-3001</small></div>
+                  </div>
+                </td>
+                <td>Sports</td>
+                <td>UK 6-12</td>
+                <td>
+                  <div class="bar"><i class="low" style="width:10%"></i></div><small>12 pairs</small>
+                </td>
+                <td>₹3,299</td>
+                <td><span class="badge low">Low stock</span></td>
+                <td><button class="ib del errorpage" title="Delete" aria-label="Delete"><span
+                      class="material-symbols-outlined">delete</span></button></td>
+              </tr>
+              <tr data-cat="sports">
+                <td>
+                  <div class="cell"><img
+                      src="./src/image_34.webp"
+                      alt="" loading="lazy">
+                    <div><b>Trail Pro Boots</b><small>SP-3002</small></div>
+                  </div>
+                </td>
+                <td>Sports</td>
+                <td>UK 7-12</td>
+                <td>
+                  <div class="bar"><i class="out" style="width:0%"></i></div><small>0 pairs</small>
+                </td>
+                <td>₹4,299</td>
+                <td><span class="badge out">Out of stock</span></td>
+                <td><button class="ib del errorpage" title="Delete" aria-label="Delete"><span
+                      class="material-symbols-outlined">delete</span></button></td>
+              </tr>
+              <tr data-cat="sandals">
+                <td>
+                  <div class="cell"><img
+                      src="./src/image_39.webp"
+                      alt="" loading="lazy">
+                    <div><b>Cloud Slides</b><small>SD-4001</small></div>
+                  </div>
+                </td>
+                <td>Sandals</td>
+                <td>UK 5-11</td>
+                <td>
+                  <div class="bar"><i class="ok" style="width:81%"></i></div><small>210 pairs</small>
+                </td>
+                <td>₹899</td>
+                <td><span class="badge ok">In stock</span></td>
+                <td><button class="ib del errorpage" title="Delete" aria-label="Delete"><span
+                      class="material-symbols-outlined">delete</span></button></td>
+              </tr>
+              <tr data-cat="sandals">
+                <td>
+                  <div class="cell"><img
+                      src="./src/image_4.webp"
+                      alt="" loading="lazy">
+                    <div><b>Comfort Walk Sandal</b><small>SD-4002</small></div>
+                  </div>
+                </td>
+                <td>Sandals</td>
+                <td>UK 5-11</td>
+                <td>
+                  <div class="bar"><i class="ok" style="width:46%"></i></div><small>64 pairs</small>
+                </td>
+                <td>₹1,499</td>
+                <td><span class="badge ok">In stock</span></td>
+                <td><button class="ib del errorpage" title="Delete" aria-label="Delete"><span
+                      class="material-symbols-outlined">delete</span></button></td>
+              </tr>
+              <tr data-cat="sandals">
+                <td>
+                  <div class="cell"><img
+                      src="./src/image_6.webp"
+                      alt="" loading="lazy">
+                    <div><b>Beach Strap Sandal</b><small>SD-4003</small></div>
+                  </div>
+                </td>
+                <td>Sandals</td>
+                <td>UK 5-10</td>
+                <td>
+                  <div class="bar"><i class="low" style="width:11%"></i></div><small>9 pairs</small>
+                </td>
+                <td>₹1,299</td>
+                <td><span class="badge low">Low stock</span></td>
+                <td><button class="ib del errorpage" title="Delete" aria-label="Delete"><span
+                      class="material-symbols-outlined">delete</span></button></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="empty">No products match your filter.</p>
+        </div>
+      </section>
+
+      <!-- ORDERS -->
+      <section class="view" id="orders">
+        <div class="stats">
+          <div class="stat"><span class="material-symbols-outlined">shopping_bag</span>
+            <div>
+              <h3>1,842</h3>
+              <p>Orders this month</p>
+            </div><small class="up">+9.3% this month</small>
+          </div>
+          <div class="stat"><span class="material-symbols-outlined">inventory</span>
+            <div>
+              <h3>284</h3>
+              <p>Ready to ship</p>
+            </div><small class="up">Pack today</small>
+          </div>
+          <div class="stat"><span class="material-symbols-outlined">task_alt</span>
+            <div>
+              <h3>1,490</h3>
+              <p>Delivered</p>
+            </div><small class="up">+7.1% this month</small>
+          </div>
+          <div class="stat"><span class="material-symbols-outlined">undo</span>
+            <div>
+              <h3>18</h3>
+              <p>Returns and refunds</p>
+            </div><small class="dn">+3 this week</small>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ch">
+            <h2>Order queue</h2>
+            <div class="chips" id="orderChips"><button class="chip active" data-f="all">All</button><button class="chip"
+                data-f="pending">Pending</button><button class="chip" data-f="shipped">Shipped</button><button
+                class="chip" data-f="delivered">Delivered</button><button class="chip"
+                data-f="returned">Returned</button></div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Customer</th>
+                <th>Item</th>
+                <th>Amount</th>
+                <th>Payment</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody class="s" id="orderBody">
+              <tr data-status="delivered">
+                <td><b>#SM-9041</b></td>
+                <td>Rahul Sharma</td>
+                <td>Air Runner X (UK 9)</td>
+                <td>₹2,499</td>
+                <td>UPI</td>
+                <td>05 Oct</td>
+                <td><select class="st ok">
+                    <option>Pending</option>
+                    <option>Shipped</option>
+                    <option selected>Delivered</option>
+                    <option>Returned</option>
+                  </select></td>
+              </tr>
+              <tr data-status="shipped">
+                <td><b>#SM-9040</b></td>
+                <td>Divya Menon</td>
+                <td>Oxford Classic (UK 7)</td>
+                <td>₹3,799</td>
+                <td>Card</td>
+                <td>05 Oct</td>
+                <td><select class="st blue">
+                    <option>Pending</option>
+                    <option selected>Shipped</option>
+                    <option>Delivered</option>
+                    <option>Returned</option>
+                  </select></td>
+              </tr>
+              <tr data-status="pending">
+                <td><b>#SM-9039</b></td>
+                <td>Karthik S.</td>
+                <td>Speed Max Runner (UK 10)</td>
+                <td>₹3,299</td>
+                <td>COD</td>
+                <td>04 Oct</td>
+                <td><select class="st low">
+                    <option selected>Pending</option>
+                    <option>Shipped</option>
+                    <option>Delivered</option>
+                    <option>Returned</option>
+                  </select></td>
+              </tr>
+              <tr data-status="delivered">
+                <td><b>#SM-9038</b></td>
+                <td>Priya Raman</td>
+                <td>Cloud Slides (UK 6)</td>
+                <td>₹899</td>
+                <td>UPI</td>
+                <td>04 Oct</td>
+                <td><select class="st ok">
+                    <option>Pending</option>
+                    <option>Shipped</option>
+                    <option selected>Delivered</option>
+                    <option>Returned</option>
+                  </select></td>
+              </tr>
+              <tr data-status="shipped">
+                <td><b>#SM-9037</b></td>
+                <td>Arjun Mehta</td>
+                <td>Trail Pro Boots (UK 9)</td>
+                <td>₹4,299</td>
+                <td>Card</td>
+                <td>03 Oct</td>
+                <td><select class="st blue">
+                    <option>Pending</option>
+                    <option selected>Shipped</option>
+                    <option>Delivered</option>
+                    <option>Returned</option>
+                  </select></td>
+              </tr>
+              <tr data-status="pending">
+                <td><b>#SM-9036</b></td>
+                <td>Meena Iyer</td>
+                <td>Comfort Walk Sandal (UK 5)</td>
+                <td>₹1,499</td>
+                <td>UPI</td>
+                <td>03 Oct</td>
+                <td><select class="st low">
+                    <option selected>Pending</option>
+                    <option>Shipped</option>
+                    <option>Delivered</option>
+                    <option>Returned</option>
+                  </select></td>
+              </tr>
+              <tr data-status="returned">
+                <td><b>#SM-9035</b></td>
+                <td>Suresh Babu</td>
+                <td>Derby Leather Brown (UK 8)</td>
+                <td>₹4,199</td>
+                <td>Card</td>
+                <td>02 Oct</td>
+                <td><select class="st out">
+                    <option>Pending</option>
+                    <option>Shipped</option>
+                    <option>Delivered</option>
+                    <option selected>Returned</option>
+                  </select></td>
+              </tr>
+              <tr data-status="delivered">
+                <td><b>#SM-9034</b></td>
+                <td>Anitha R.</td>
+                <td>Street Low Classic (UK 6)</td>
+                <td>₹1,999</td>
+                <td>COD</td>
+                <td>02 Oct</td>
+                <td><select class="st ok">
+                    <option>Pending</option>
+                    <option>Shipped</option>
+                    <option selected>Delivered</option>
+                    <option>Returned</option>
+                  </select></td>
+              </tr>
+              <tr data-status="delivered">
+                <td><b>#SM-9033</b></td>
+                <td>Vikram N.</td>
+                <td>Court Pro White (UK 10)</td>
+                <td>₹2,799</td>
+                <td>UPI</td>
+                <td>01 Oct</td>
+                <td><select class="st ok">
+                    <option>Pending</option>
+                    <option>Shipped</option>
+                    <option selected>Delivered</option>
+                    <option>Returned</option>
+                  </select></td>
+              </tr>
+              <tr data-status="shipped">
+                <td><b>#SM-9032</b></td>
+                <td>Sneha P.</td>
+                <td>Beach Strap Sandal (UK 5)</td>
+                <td>₹1,299</td>
+                <td>Net banking</td>
+                <td>01 Oct</td>
+                <td><select class="st blue">
+                    <option>Pending</option>
+                    <option selected>Shipped</option>
+                    <option>Delivered</option>
+                    <option>Returned</option>
+                  </select></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="empty">No orders match your filter.</p>
+        </div>
+      </section>
+
+      <!-- SHIPPING -->
+      <section class="view" id="shipping">
+        <div class="stats">
+          <div class="stat"><span class="material-symbols-outlined">local_shipping</span>
+            <div>
+              <h3>64</h3>
+              <p>Shipments today</p>
+            </div><small class="up">+5 vs yesterday</small>
+          </div>
+          <div class="stat"><span class="material-symbols-outlined">route</span>
+            <div>
+              <h3>38</h3>
+              <p>In transit</p>
+            </div><small class="up">On schedule</small>
+          </div>
+          <div class="stat"><span class="material-symbols-outlined">done_all</span>
+            <div>
+              <h3>21</h3>
+              <p>Delivered today</p>
+            </div><small class="up">+9.4% vs yesterday</small>
+          </div>
+          <div class="stat"><span class="material-symbols-outlined">schedule</span>
+            <div>
+              <h3>5</h3>
+              <p>Delayed</p>
+            </div><small class="dn">Needs attention</small>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ch">
+            <h2>Live shipments</h2>
+          </div>
+          <div class="ships sc">
+            <div class="ship">
+              <div class="between"><b>SH-5501</b><span class="badge blue">In transit</span></div>
+              <p>Chennai to Coimbatore</p>
+              <div class="bar full"><i class="blue" style="width:65%"></i></div>
+              <div class="between muted"><span>Delhivery</span><span>Arrives tomorrow</span></div>
+            </div>
+            <div class="ship">
+              <div class="between"><b>SH-5502</b><span class="badge blue">In transit</span></div>
+              <p>Chennai to Bengaluru</p>
+              <div class="bar full"><i class="blue" style="width:40%"></i></div>
+              <div class="between muted"><span>Blue Dart</span><span>Arrives in 2 days</span></div>
+            </div>
+            <div class="ship">
+              <div class="between"><b>SH-5503</b><span class="badge low">Out for delivery</span></div>
+              <p>Chennai city, same day</p>
+              <div class="bar full"><i class="blue" style="width:90%"></i></div>
+              <div class="between muted"><span>Local rider</span><span>Arrives today</span></div>
+            </div>
+            <div class="ship">
+              <div class="between"><b>SH-5504</b><span class="badge ok">Delivered</span></div>
+              <p>Chennai to Madurai</p>
+              <div class="bar full"><i class="ok" style="width:100%"></i></div>
+              <div class="between muted"><span>DTDC</span><span>Delivered 4 Oct</span></div>
+            </div>
+            <div class="ship">
+              <div class="between"><b>SH-5505</b><span class="badge out">Delayed</span></div>
+              <p>Chennai to Hyderabad</p>
+              <div class="bar full"><i class="blue" style="width:30%"></i></div>
+              <div class="between muted"><span>Ecom Express</span><span>Delayed by 1 day</span></div>
+            </div>
+            <div class="ship">
+              <div class="between"><b>SH-5506</b><span class="badge blue">Picked up</span></div>
+              <p>Chennai to Kochi</p>
+              <div class="bar full"><i class="blue" style="width:15%"></i></div>
+              <div class="between muted"><span>Delhivery</span><span>Arrives in 3 days</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ch">
+            <h2>Courier performance</h2>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Courier</th>
+                <th>On-time rate</th>
+                <th>Average delivery</th>
+                <th>Parcels this month</th>
+              </tr>
+            </thead>
+            <tbody class="s">
+              <tr>
+                <td><b>Delhivery</b></td>
+                <td>96%</td>
+                <td>2.4 days</td>
+                <td>1,240</td>
+              </tr>
+              <tr>
+                <td><b>Blue Dart</b></td>
+                <td>98%</td>
+                <td>1.9 days</td>
+                <td>860</td>
+              </tr>
+              <tr>
+                <td><b>DTDC</b></td>
+                <td>91%</td>
+                <td>3.1 days</td>
+                <td>540</td>
+              </tr>
+              <tr>
+                <td><b>Ecom Express</b></td>
+                <td>88%</td>
+                <td>3.4 days</td>
+                <td>310</td>
+              </tr>
+              <tr>
+                <td><b>Local rider</b></td>
+                <td>99%</td>
+                <td>Same day</td>
+                <td>720</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- CUSTOMERS -->
+      <section class="view" id="customers">
+        <div class="stats">
+          <div class="stat"><span class="material-symbols-outlined">group</span>
+            <div>
+              <h3>3,260</h3>
+              <p>Total customers</p>
+            </div><small class="up">+4.8% this month</small>
+          </div>
+          <div class="stat"><span class="material-symbols-outlined">person_add</span>
+            <div>
+              <h3>124</h3>
+              <p>New this month</p>
+            </div><small class="up">+18 vs last month</small>
+          </div>
+          <div class="stat"><span class="material-symbols-outlined">workspace_premium</span>
+            <div>
+              <h3>410</h3>
+              <p>Gold and Silver members</p>
+            </div><small class="up">+22 this month</small>
+          </div>
+          <div class="stat"><span class="material-symbols-outlined">support_agent</span>
+            <div>
+              <h3>9</h3>
+              <p>Open support tickets</p>
+            </div><small class="up">-4 since last week</small>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ch">
+            <h2>Customer directory</h2>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Customer</th>
+                <th>City</th>
+                <th>Orders</th>
+                <th>Total spent</th>
+                <th>Last order</th>
+                <th>Tier</th>
+              </tr>
+            </thead>
+            <tbody class="s">
+              <tr>
+                <td>
+                  <div class="cell"><span class="av sm"><i>R</i><img
+                        src="./src/image_17.webp"
+                        alt="" loading="lazy" onerror="this.remove()"></span><b>Rahul Sharma</b></div>
+                </td>
+                <td>Chennai</td>
+                <td>24</td>
+                <td>₹58,400</td>
+                <td>05 Oct</td>
+                <td><span class="badge low">Gold</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="cell"><span class="av sm"><i>D</i><img
+                        src="./src/image_18.webp"
+                        alt="" loading="lazy" onerror="this.remove()"></span><b>Divya Menon</b></div>
+                </td>
+                <td>Kochi</td>
+                <td>18</td>
+                <td>₹41,200</td>
+                <td>05 Oct</td>
+                <td><span class="badge low">Gold</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="cell"><span class="av sm"><i>K</i><img
+                        src="./src/image_19.webp"
+                        alt="" loading="lazy" onerror="this.remove()"></span><b>Karthik S.</b></div>
+                </td>
+                <td>Bengaluru</td>
+                <td>12</td>
+                <td>₹29,800</td>
+                <td>04 Oct</td>
+                <td><span class="badge blue">Silver</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="cell"><span class="av sm"><i>P</i><img
+                        src="./src/image_25.webp"
+                        alt="" loading="lazy" onerror="this.remove()"></span><b>Priya Raman</b></div>
+                </td>
+                <td>Coimbatore</td>
+                <td>9</td>
+                <td>₹21,500</td>
+                <td>04 Oct</td>
+                <td><span class="badge blue">Silver</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="cell"><span class="av sm"><i>A</i><img
+                        src="./src/image_26.webp"
+                        alt="" loading="lazy" onerror="this.remove()"></span><b>Arjun Mehta</b></div>
+                </td>
+                <td>Chennai</td>
+                <td>7</td>
+                <td>₹17,900</td>
+                <td>03 Oct</td>
+                <td><span class="badge blue">Silver</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="cell"><span class="av sm"><i>M</i><img
+                        src="./src/img13.webp"
+                        alt="" loading="lazy" onerror="this.remove()"></span><b>Meena Iyer</b></div>
+                </td>
+                <td>Madurai</td>
+                <td>3</td>
+                <td>₹6,700</td>
+                <td>03 Oct</td>
+                <td><span class="badge ok">New</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="cell"><span class="av sm"><i>S</i><img
+                        src="./src/img14.webp"
+                        alt="" loading="lazy" onerror="this.remove()"></span><b>Suresh Babu</b></div>
+                </td>
+                <td>Hyderabad</td>
+                <td>2</td>
+                <td>₹7,100</td>
+                <td>02 Oct</td>
+                <td><span class="badge ok">New</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="cell"><span class="av sm"><i>A</i><img
+                        src="./src/img15.webp"
+                        alt="" loading="lazy" onerror="this.remove()"></span><b>Anitha R.</b></div>
+                </td>
+                <td>Trichy</td>
+                <td>5</td>
+                <td>₹11,300</td>
+                <td>02 Oct</td>
+                <td><span class="badge blue">Silver</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ANALYTICS -->
+      <section class="view" id="analytics">
+        <div class="stats">
+          <div class="stat"><span class="material-symbols-outlined">visibility</span>
+            <div>
+              <h3>48.2K</h3>
+              <p>Store visits</p>
+            </div><small class="up">+11.4% this month</small>
+          </div>
+          <div class="stat"><span class="material-symbols-outlined">shopping_cart_checkout</span>
+            <div>
+              <h3>3.8%</h3>
+              <p>Conversion rate</p>
+            </div><small class="up">+0.4% this month</small>
+          </div>
+          <div class="stat"><span class="material-symbols-outlined">receipt</span>
+            <div>
+              <h3>₹3,692</h3>
+              <p>Average order value</p>
+            </div><small class="up">+₹210 this month</small>
+          </div>
+          <div class="stat"><span class="material-symbols-outlined">repeat</span>
+            <div>
+              <h3>34%</h3>
+              <p>Repeat customers</p>
+            </div><small class="up">+2.1% this month</small>
+          </div>
+        </div>
+        <div class="two">
+          <div class="card">
+            <div class="ch">
+              <h2>Revenue by month</h2><span class="badge blue">2026</span>
+            </div>
+            <div class="chart" id="chartYear"></div>
+          </div>
+          <div class="card">
+            <div class="ch">
+              <h2>Payment methods</h2>
+            </div>
+            <div class="donut-wrap">
+              <div class="donut" data-c="UPI 52%"
+                style="background:conic-gradient(var(--blue) 0 52%,var(--orange) 52% 76%,var(--green) 76% 94%,var(--ink2) 94% 100%)">
+              </div>
+              <div class="legend"><span><i style="background:var(--blue)"></i>UPI<em>52%</em></span><span><i
+                    style="background:var(--orange)"></i>Cards<em>24%</em></span><span><i
+                    style="background:var(--green)"></i>Cash<em>18%</em></span><span><i
+                    style="background:var(--ink2)"></i> banking<em>6%</em></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="two">
+          <div class="card">
+            <div class="ch">
+              <h2>Sales by city</h2>
+            </div>
+            <div class="dist"><span>Chennai</span>
+              <div class="bar full"><i class="blue" style="width:76%"></i></div><span>38%</span>
+            </div>
+            <div class="dist"><span>Bengaluru</span>
+              <div class="bar full"><i class="blue" style="width:44%"></i></div><span>22%</span>
+            </div>
+            <div class="dist"><span>Coimbatore</span>
+              <div class="bar full"><i class="blue" style="width:24%"></i></div><span>12%</span>
+            </div>
+            <div class="dist"><span>Hyderabad</span>
+              <div class="bar full"><i class="blue" style="width:20%"></i></div><span>10%</span>
+            </div>
+            <div class="dist"><span>Kochi</span>
+              <div class="bar full"><i class="blue" style="width:16%"></i></div><span>8%</span>
+            </div>
+            <div class="dist"><span>Others</span>
+              <div class="bar full"><i class="blue" style="width:20%"></i></div><span>10%</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="ch">
+              <h2>Conversion funnel</h2>
+            </div>
+            <div class="dist wide"><span>Store visits</span>
+              <div class="bar full"><i class="or" style="width:100%"></i></div><span>48,200</span>
+            </div>
+            <div class="dist wide"><span>Product views</span>
+              <div class="bar full"><i class="or" style="width:44%"></i></div><span>21,400</span>
+            </div>
+            <div class="dist wide"><span>Added to cart</span>
+              <div class="bar full"><i class="or" style="width:14%"></i></div><span>6,900</span>
+            </div>
+            <div class="dist wide"><span>Checkout started</span>
+              <div class="bar full"><i class="or" style="width:7%"></i></div><span>3,100</span>
+            </div>
+            <div class="dist wide"><span>Orders placed</span>
+              <div class="bar full"><i class="or" style="width:4%"></i></div><span>1,842</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- add product modal -->
+  <div class="modal" id="modal">
+    <div class="mbox">
+      <h2>Add a product</h2>
+      <p>Fill in the details to add a new pair to your store.</p>
+      <div class="form">
+        <div class="f full"><label for="pName">Product name</label><input id="pName"
+            placeholder="e.g. Urban Runner"><small>Please enter a product name</small></div>
+        <div class="f"><label for="pCat">Category</label><select id="pCat">
+            <option>Sneakers</option>
+            <option>Formals</option>
+            <option>Sports</option>
+            <option>Sandals</option>
+          </select></div>
+        <div class="f"><label for="pSize">Sizes</label><input id="pSize" placeholder="UK 6-11"><small>Please enter
+            sizes</small></div>
+        <div class="f"><label for="pPrice">Price (₹)</label><input id="pPrice" type="number" min="1"
+            placeholder="2499"><small>Enter a valid price</small></div>
+        <div class="f"><label for="pStock">Stock (pairs)</label><input id="pStock" type="number" min="0"
+            placeholder="100"><small>Enter a valid stock number</small></div>
+      </div>
+      <div class="macts"><button class="btn ghost" id="cancelProd">Cancel</button><button class="btn" id="saveProd">Add
+          product</button></div>
+    </div>
+  </div>
+  <div class="toast" id="toast"><span class="material-symbols-outlined">check_circle</span><span id="toastMsg"></span>
+  </div>
+
+  <script>
+    const $ = s => document.querySelector(s), $$ = s => document.querySelectorAll(s);
+    const titles = { overview: "Overview", products: "Products", orders: "Orders", shipping: "Shipping", customers: "Customers", analytics: "Analytics" };
+    let currentView = "overview";
+
+    /* toast */
+    let tt; function toast(m) { $("#toastMsg").textContent = m; $("#toast").classList.add("show"); clearTimeout(tt); tt = setTimeout(() => $("#toast").classList.remove("show"), 2600); }
+
+    /* navigation */
+    function showView(id) {
+      currentView = id;
+      $$(".view").forEach(v => v.classList.toggle("active", v.id === id));
+      $$("#nav .nv").forEach(b => b.classList.toggle("active", b.dataset.view === id));
+      $("#title").textContent = titles[id]; $("#crumb").textContent = titles[id];
+      runFilters(); closeRail(); $("#pop").classList.remove("show");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    $$("#nav .nv").forEach(b => b.addEventListener("click", () => showView(b.dataset.view)));
+    $$("[data-go]").forEach(b => b.addEventListener("click", () => showView(b.dataset.go)));
+    function closeRail() { $("#rail").classList.remove("open"); $("#scrim").classList.remove("show"); }
+    $("#burger").addEventListener("click", () => { $("#rail").classList.add("open"); $("#scrim").classList.add("show"); });
+    $("#scrim").addEventListener("click", closeRail);
+    $("#railClose").addEventListener("click", closeRail);
+    $("#logout").addEventListener("click", () => { window.location.href = "index.html"; });
+
+    /* user + date */
+    try { const e = localStorage.getItem("useremail"); if (e) $$(".uname").forEach(n => n.textContent = e.split("@")[0]); } catch (e) { }
+    const initial = $(".uname").textContent.trim().charAt(0).toUpperCase();
+    $$(".av .ini").forEach(i => i.textContent = initial);
+
+    /* notifications */
+    $("#bell").addEventListener("click", e => { e.stopPropagation(); $("#pop").classList.toggle("show"); });
+    document.addEventListener("click", e => { if (!e.target.closest("#pop")) $("#pop").classList.remove("show"); });
+
+    /* charts */
+    function draw(el, labels, vals, unit, hi) {
+      const max = Math.max(...vals);
+      el.innerHTML = labels.map((l, i) => '<div class="col' + (i === hi ? ' hi' : '') + '"><span>' + unit.pre + vals[i] + unit.suf + '</span><i style="height:' + Math.round(vals[i] / max * 78) + '%"></i><b>' + l + '</b></div>').join("");
+    }
+    const data = {
+      week: { l: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], v: [52, 68, 45, 80, 95, 72, 60], u: { pre: "₹", suf: "K" }, h: 4 },
+      month: { l: ["W1", "W2", "W3", "W4", "W5", "W6"], v: [1.1, 1.4, 1.2, 1.7, 1.5, 1.9], u: { pre: "₹", suf: "L" }, h: 5 },
+      year: { l: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], v: [4.2, 4.6, 5.1, 4.9, 5.4, 5.8, 6.1, 6.4, 6.8, 6.2, 0, 0], u: { pre: "₹", suf: "L" }, h: 8 }
+    };
+    function setRange(r) { const d = data[r]; draw($("#chart"), d.l, d.v, d.u, d.h); }
+    $$("#range button").forEach(b => b.addEventListener("click", () => { $$("#range button").forEach(x => x.classList.remove("active")); b.classList.add("active"); setRange(b.dataset.r); }));
+    setRange("week");
+    draw($("#chartYear"), data.year.l.slice(0, 10), data.year.v.slice(0, 10), data.year.u, 8);
+
+    /* filters */
+    const filt = { products: "all", orders: "all" };
+    function runFilters() {
+      const q = "";
+      $$(".view.active tbody.s").forEach(body => {
+        let n = 0;
+        [...body.rows].forEach(r => {
+          let ok = r.textContent.toLowerCase().includes(q);
+          if (body.id === "prodBody" && filt.products !== "all") ok = ok && r.dataset.cat === filt.products;
+          if (body.id === "orderBody" && filt.orders !== "all") ok = ok && r.dataset.status === filt.orders;
+          r.style.display = ok ? "" : "none"; if (ok) n++;
+        });
+        const em = body.closest(".card").querySelector(".empty"); if (em) em.style.display = n ? "none" : "block";
+      });
+      $$(".view.active .sc").forEach(g => [...g.children].forEach(c => c.style.display = c.textContent.toLowerCase().includes(q) ? "" : "none"));
+    }
+    [["#prodChips", "products"], ["#orderChips", "orders"]].forEach(([sel, key]) => $$(sel + " .chip").forEach(c => c.addEventListener("click", () => {
+      $$(sel + " .chip").forEach(x => x.classList.remove("active")); c.classList.add("active"); filt[key] = c.dataset.f; runFilters();
+    })));
+
+    /* order status change */
+    const cls = { delivered: "ok", shipped: "blue", pending: "low", returned: "out" };
+    document.addEventListener("change", e => {
+      if (e.target.classList.contains("st")) {
+        const v = e.target.value.toLowerCase();
+        e.target.className = "st " + cls[v];
+        e.target.closest("tr").dataset.status = v;
+        toast("Order status updated to " + e.target.value); runFilters();
+      }
+    });
+
+    /* delete product, restock */
+    // document.addEventListener("click", e => {
+    //   const del = e.target.closest(".del"); if (del) { del.closest("tr").remove(); toast("Product removed"); runFilters(); }
+    //   if (e.target.classList.contains("restock")) toast("Restock request sent to supplier");
+    // });
+
+    /* add product modal */
+    // function openModal() { $("#modal").classList.add("show"); }
+    // function closeModal() { $("#modal").classList.remove("show"); $$("#modal .f").forEach(f => f.classList.remove("err")); }
+    // $("#addProd").addEventListener("click", openModal);
+    // $("#cancelProd").addEventListener("click", closeModal);
+    // $("#modal").addEventListener("click", e => { if (e.target.id === "modal") closeModal(); });
+    // function mark(id, ok) { $("#" + id).parentElement.classList.toggle("err", !ok); return ok; }
+    // $("#saveProd").addEventListener("click", () => {
+    //   const name = $("#pName").value.trim(), size = $("#pSize").value.trim(), price = +$("#pPrice").value, stock = $("#pStock").value;
+    //   let ok = true;
+    //   ok = mark("pName", name.length > 1) && ok; ok = mark("pSize", size.length > 0) && ok; ok = mark("pPrice", price > 0) && ok; ok = mark("pStock", stock !== "" && +stock >= 0) && ok;
+    //   if (!ok) return;
+    //   const s = +stock, st = s === 0 ? ["Out of stock", "out"] : s <= 20 ? ["Low stock", "low"] : ["In stock", "ok"], cat = $("#pCat").value;
+    //   const tr = document.createElement("tr"); tr.dataset.cat = cat.toLowerCase();
+    //   tr.innerHTML = '<td><div class="cell"><span class="av sm" style="border-radius:12px;width:44px;height:44px">' + name[0].toUpperCase() + '</span><div><b>' + name + '</b><small>NEW-' + Math.floor(1000 + Math.random() * 9000) + '</small></div></div></td><td>' + cat + '</td><td>' + size + '</td><td><div class="bar"><i class="' + st[1] + '" style="width:' + Math.min(100, Math.round(s / 2)) + '%"></i></div><small>' + s + ' pairs</small></td><td>₹' + price.toLocaleString("en-IN") + '</td><td><span class="badge ' + st[1] + '">' + st[0] + '</span></td><td><button class="ib del" title="Delete" aria-label="Delete"><span class="material-symbols-outlined">delete</span></button></td>';
+    //   $("#prodBody").prepend(tr);
+    //   ["pName", "pSize", "pPrice", "pStock"].forEach(i => $("#" + i).value = "");
+    //   closeModal(); toast(name + " added to products"); runFilters();
+    // });
+    // document.addEventListener("keydown", e => { if (e.key === "Escape") { closeModal(); $("#pop").classList.remove("show"); } });
+    
+        document.querySelectorAll(".errorpage").forEach(el => el.addEventListener("click", () => location.href = "404.html"));
+
+    let aslogo=document.querySelectorAll(".asidelogo");
+    aslogo[0].addEventListener("click",()=>{
+      location.href="admin.html";
+    });
+ 
+ </script>
+</body>
+
+</html>

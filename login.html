@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - Solemate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,-50..200">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+<style>
+:root{--ink:#0d1b2a;--blue:#2740ff;--orange:#ff6a2b;--muted:#c4cddd;--red:#ff7b80}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow-x:hidden}
+body{font-family:"Figtree",sans-serif;color:#fff;min-height:100vh;
+  background:
+    linear-gradient(100deg,rgba(13,27,42,.94) 0%,rgba(13,27,42,.78) 45%,rgba(39,64,255,.45) 100%),
+    url("https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat fixed,
+    var(--ink)}
+h1,h2{font-family:"Bricolage Grotesque",sans-serif;line-height:1.05}
+a{text-decoration:none;color:inherit}
+img{display:block;max-width:100%}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+
+.page{min-height:100vh;display:flex;flex-direction:column}
+.top{display:flex;justify-content:space-between;align-items:center;padding:26px clamp(20px,5vw,64px)}
+.logo img{width:150px;height:auto;filter:brightness(0) invert(1)}
+.back{display:flex;align-items:center;gap:6px;font-weight:600;font-size:14px;padding:9px 18px;border-radius:30px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);transition:.25s}
+.back:hover{background:#fff;color:var(--ink)}
+.back .material-symbols-outlined{font-size:18px}
+
+.main{flex:1;display:grid;grid-template-columns:1.1fr 1fr;gap:50px;align-items:center;padding:20px clamp(20px,5vw,64px) 50px;max-width:1300px;width:100%;margin:0 auto}
+
+/* left text */
+.hero h1{font-size:clamp(46px,7vw,98px);font-weight:800;letter-spacing:-3px;margin-bottom:22px}
+.hero h1 span{display:block;color:var(--orange)}
+.hero>p{color:var(--muted);font-size:18px;line-height:1.65;max-width:460px;margin-bottom:34px}
+.points{display:grid;gap:14px}
+.points div{display:flex;align-items:center;gap:14px;font-weight:600}
+.points .material-symbols-outlined{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:var(--orange);font-size:22px}
+.review{margin-top:36px;display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(10px);border-radius:18px;padding:14px 18px;max-width:420px}
+.review img{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid var(--orange)}
+.review p{font-size:14px;line-height:1.5;color:#e6ebf5}
+.review b{display:block;font-size:13px;margin-top:3px;color:#fff}
+
+/* glass card */
+.card{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border-radius:30px;padding:40px 36px;max-width:450px;width:100%;margin-left:auto;box-shadow:0 30px 70px rgba(0,0,0,.35)}
+.card h2{font-size:32px;font-weight:800;letter-spacing:-1px;margin-bottom:6px}
+.card .sub{color:var(--muted);font-size:15px;margin-bottom:24px;line-height:1.55}
+
+.tabs{display:flex;gap:26px;border-bottom:1px solid rgba(255,255,255,.22);margin-bottom:26px}
+.tabs button{background:none;border:none;color:var(--muted);font:700 15px "Figtree",sans-serif;padding:0 0 12px;cursor:pointer;position:relative;display:flex;align-items:center;gap:7px;transition:color .25s}
+.tabs button .material-symbols-outlined{font-size:20px}
+.tabs button.active{color:#fff}
+.tabs button.active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;background:var(--orange);border-radius:3px}
+
+/* floating label fields */
+.field{margin-bottom:18px}
+.input{position:relative;display:flex;align-items:center;background:rgba(13,27,42,.45);border:1.5px solid rgba(255,255,255,.22);border-radius:14px;transition:border-color .25s,box-shadow .25s}
+.input:focus-within{border-color:var(--orange);box-shadow:0 0 0 4px rgba(255,106,43,.2)}
+.input.err{border-color:var(--red)}
+.input>.material-symbols-outlined{padding-left:16px;color:var(--muted);font-size:21px}
+.input input{flex:1;min-width:0;border:none;outline:none;background:transparent;color:#fff;font:500 15px "Figtree",sans-serif;padding:22px 16px 8px 12px}
+.input label{position:absolute;left:49px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none;transition:all .2s ease}
+.input input:focus+label,.input input:not(:placeholder-shown)+label{top:14px;font-size:11.5px;color:var(--orange);font-weight:600}
+.passeye{padding:0 16px;cursor:pointer;color:var(--muted)}
+.field-error{color:var(--red);font-size:13px;margin-top:6px}
+
+.row-end{display:flex;justify-content:space-between;align-items:center;font-size:14px;margin:4px 0 24px;gap:10px;flex-wrap:wrap}
+.remember{display:flex;align-items:center;gap:8px;color:var(--muted);cursor:pointer}
+.remember input{accent-color:var(--orange);width:16px;height:16px}
+.forgot{font-weight:700}
+.forgot:hover{color:var(--orange)}
+
+.submit{width:100%;padding:17px;border:none;border-radius:14px;background:var(--orange);color:#fff;font:700 16px "Figtree",sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .25s,box-shadow .25s,background .25s}
+.submit:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(255,106,43,.45);background:#ff7a42}
+.submit .material-symbols-outlined{transition:transform .25s}
+.submit:hover .material-symbols-outlined{transform:translateX(5px)}
+
+.or{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:14px;margin:22px 0 16px}
+.or::before,.or::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.22)}
+.social{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px}
+.social a{display:grid;place-items:center;padding:13px;border-radius:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);font-size:18px;transition:.25s}
+.social a:hover{background:#fff;color:var(--ink);transform:translateY(-3px)}
+.foot{text-align:center;color:var(--muted);font-size:15px}
+.foot a{color:#fff;font-weight:700;border-bottom:2px solid var(--orange)}
+.foot a:hover{color:var(--orange)}
+
+/* success popup */
+.popup{position:fixed;inset:0;background:rgba(13,27,42,.7);backdrop-filter:blur(4px);display:none;justify-content:center;align-items:center;z-index:9999;padding:20px}
+.popup.active{display:flex}
+.popup-box{width:340px;background:#fff;color:var(--ink);border-radius:24px;padding:34px;text-align:center}
+.popup-box .ok-icon{width:60px;height:60px;border-radius:50%;background:#eef0ff;color:var(--blue);display:grid;place-items:center;font-size:32px;margin:0 auto 16px}
+.popup-box h2{font-size:24px;margin-bottom:8px}
+.popup-box p{color:#5b6678;margin-bottom:22px;font-size:15px;line-height:1.5}
+.popup-box button{padding:13px 40px;border:none;background:var(--orange);color:#fff;font:700 15px "Figtree",sans-serif;border-radius:30px;cursor:pointer}
+
+input[type="password"]::-ms-reveal{display:none}
+
+@media(max-width:960px){
+  .main{grid-template-columns:1fr;gap:34px}
+  .hero h1{font-size:clamp(42px,12vw,64px);letter-spacing:-2px}
+  .hero>p,.points,.review{display:none}
+  .card{margin:0 auto}
+}
+@media(max-width:480px){.card{padding:30px 22px}}
+</style>
+</head>
+<body>
+
+<div class="popup" id="popup">
+  <div class="popup-box">
+    <span class="material-symbols-outlined ok-icon">check_circle</span>
+    <h2>Login successful</h2>
+    <p id="popupMsg">Welcome back. Click OK to continue.</p>
+    <button id="okBtn">OK</button>
+  </div>
+</div>
+
+<div class="page">
+  <div class="top">
+    <a href="index.html" class="logo"><img src="./src/logo.webp" alt="Solemate logo"></a>
+    <a href="index.html" class="back"><span class="material-symbols-outlined">arrow_back</span>Home</a>
+  </div>
+
+  <main class="main">
+    <section class="hero">
+      <h1>Step back <span>in.</span></h1>
+      <p>Log in to see your orders, saved sizes and the pairs waiting in your wishlist.</p>
+      <div class="points">
+        <div><span class="material-symbols-outlined">local_shipping</span>Free delivery above ₹1,999</div>
+        <div><span class="material-symbols-outlined">published_with_changes</span>30-day easy exchange</div>
+        <div><span class="material-symbols-outlined">verified</span>100% genuine, quality checked</div>
+      </div>
+      <div class="review">
+        <img id="rev" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" alt="Arjun Mehta">
+        <p>"My Air Runners felt great from day one, and the exchange was effortless."<b>Arjun Mehta, Chennai</b></p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Welcome back</h2>
+      <p class="sub">Choose how you want to log in.</p>
+
+      <div class="tabs">
+        <button class="active" data-role="admin"><span class="material-symbols-outlined">admin_panel_settings</span>Admin</button>
+        <button data-role="customer"><span class="material-symbols-outlined">shopping_bag</span>Customer</button>
+      </div>
+
+      <div class="field">
+        <div class="input"><span class="material-symbols-outlined">mail</span><input type="email" id="log-email" placeholder=" " autocomplete="email"><label for="log-email">Email address</label></div>
+        <p class="field-error"></p>
+      </div>
+
+      <div class="field">
+        <div class="input"><span class="material-symbols-outlined">lock</span><input type="password" id="log-pass" placeholder=" " autocomplete="current-password"><label for="log-pass">Password</label><span class="passeye material-symbols-outlined">visibility_off</span></div>
+        <p class="field-error"></p>
+      </div>
+
+      <div class="row-end">
+        <label class="remember"><input type="checkbox"> Remember me</label>
+        <a href="404.html" class="forgot">Forgot password?</a>
+      </div>
+
+      <button class="submit" id="loginBtn">Log in<span class="material-symbols-outlined">arrow_forward</span></button>
+
+      <div class="or">or continue with</div>
+      <div class="social">
+        <a href="404.html" aria-label="Google"><i class="fa-brands fa-google"></i></a>
+        <a href="404.html" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="404.html" aria-label="Apple"><i class="fa-brands fa-apple"></i></a>
+      </div>
+
+      <p class="foot">New to Solemate? <a href="sign.html">Create an account</a></p>
+    </section>
+  </main>
+</div>
+
+<script>
+const email=document.querySelector("#log-email");
+const password=document.querySelector("#log-pass");
+const loginBtn=document.querySelector("#loginBtn");
+const roleTabs=document.querySelectorAll(".tabs button");
+const eyeIcon=document.querySelector(".passeye");
+const errorMsgs=document.querySelectorAll(".field-error");
+const inputBoxes=document.querySelectorAll(".input");
+
+const popup=document.querySelector("#popup");
+const popupMsg=document.querySelector("#popupMsg");
+const okBtn=document.querySelector("#okBtn");
+
+let selectedRole="admin";
+let redirectUrl="";
+
+roleTabs.forEach(tab=>{
+  tab.addEventListener("click",()=>{
+    roleTabs.forEach(t=>t.classList.remove("active"));
+    tab.classList.add("active");
+    selectedRole=tab.dataset.role;
+  });
+});
+
+eyeIcon.addEventListener("click",()=>{
+  const show=password.type==="password";
+  password.type=show?"text":"password";
+  eyeIcon.textContent=show?"visibility":"visibility_off";
+});
+
+function login(){
+  let valid=true;
+  errorMsgs.forEach(e=>e.textContent="");
+  inputBoxes.forEach(b=>b.classList.remove("err"));
+  const regex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if(email.value.trim()===""){errorMsgs[0].textContent="Please enter your email";inputBoxes[0].classList.add("err");valid=false;}
+  else if(!regex.test(email.value.trim())){errorMsgs[0].textContent="Please enter a valid email";inputBoxes[0].classList.add("err");valid=false;}
+
+  if(password.value.trim()===""){errorMsgs[1].textContent="Please enter your password";inputBoxes[1].classList.add("err");valid=false;}
+  else if(password.value.length<6){errorMsgs[1].textContent="Password must be at least 6 characters";inputBoxes[1].classList.add("err");valid=false;}
+
+  if(valid){
+    localStorage.setItem("useremail",email.value);
+    const isAdmin=selectedRole==="admin";
+    redirectUrl=isAdmin?"admin.html":"client.html";
+    popupMsg.textContent=isAdmin
+      ?"Welcome back. Click OK to open your admin dashboard."
+      :"Welcome back. Click OK to open your account.";
+    popup.classList.add("active");
+    okBtn.focus();
+  }
+}
+loginBtn.addEventListener("click",login);
+[email,password].forEach(el=>el.addEventListener("keydown",e=>{if(e.key==="Enter")login();}));
+okBtn.addEventListener("click",()=>{window.location.href=redirectUrl;});
+
+// fallback for broken avatar image
+document.getElementById("rev").addEventListener("error",function(){this.style.display="none";},{once:true});
+</script>
+</body>
+</html>

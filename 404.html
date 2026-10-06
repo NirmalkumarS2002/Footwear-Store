@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found - Solemate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,-50..200">
+<style>
+:root{--ink:#0d1b2a;--blue:#2740ff;--blue-dark:#1a2bc4;--orange:#ff6a2b;--paper:#eef1f6;--white:#fff;--muted:#5b6678;--line:#d9dfe9}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow-x:hidden}
+body{font-family:"Figtree",sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;position:relative}
+h1,h2{font-family:"Bricolage Grotesque",sans-serif;line-height:1.05}
+a{text-decoration:none;color:inherit}
+img{display:block;max-width:100%}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+
+/* background shapes */
+.bg{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.bg .dots{position:absolute;left:4%;top:22%;width:170px;height:170px;background-image:radial-gradient(var(--blue) 2.5px,transparent 2.5px);background-size:20px 20px;opacity:.3}
+.bg .circle{position:absolute;right:-90px;bottom:-90px;width:340px;height:340px;border-radius:50%;background:var(--blue)}
+.bg .ring{position:absolute;right:6%;top:14%;width:110px;height:110px;border-radius:50%;border:16px solid var(--orange);opacity:.9}
+
+.top{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:24px clamp(20px,5vw,64px)}
+.logo img{width:150px;height:auto}
+.back{display:flex;align-items:center;gap:6px;font-weight:600;font-size:14px;padding:9px 18px;border-radius:30px;background:var(--white);border:1px solid var(--line);transition:.25s}
+.back:hover{border-color:var(--blue);color:var(--blue)}
+.back .material-symbols-outlined{font-size:18px}
+
+main{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px 20px 60px}
+
+/* big 404 with shoe as the zero */
+.code{display:flex;align-items:center;justify-content:center;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(110px,24vw,260px);line-height:1;letter-spacing:-6px;color:var(--blue);margin-bottom:10px}
+.zero{position:relative;width:.78em;height:.78em;margin:0 .02em;flex-shrink:0}
+.zero .disc{position:absolute;inset:0;border-radius:50%;background:var(--orange);border:.04em solid var(--paper)}
+.zero img{position:absolute;inset:.05em;width:calc(100% - .1em);height:calc(100% - .1em);object-fit:cover;border-radius:50%;transform:rotate(-14deg);box-shadow:0 .1em .15em rgba(13,27,42,.3);animation:wobble 4s ease-in-out infinite}
+@keyframes wobble{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(8deg)}}
+
+main h1{font-size:clamp(28px,4vw,46px);font-weight:800;letter-spacing:-1px;margin-bottom:14px}
+main p.lead{color:var(--muted);font-size:18px;line-height:1.65;max-width:520px;margin-bottom:30px}
+
+.btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:44px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:15px 28px;border-radius:12px;font-weight:700;font-size:15px;border:2px solid transparent;cursor:pointer;font-family:inherit;transition:transform .25s,background .25s,color .25s}
+.btn:hover{transform:translateY(-3px)}
+.btn-blue{background:var(--blue);color:#fff}
+.btn-blue:hover{background:var(--blue-dark)}
+.btn-line{border-color:var(--ink);color:var(--ink);background:transparent}
+.btn-line:hover{background:var(--ink);color:#fff}
+
+.try{max-width:640px}
+.try h2{font-size:20px;margin-bottom:16px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:30px;background:var(--white);border:1px solid var(--line);font-weight:600;font-size:14px;transition:.25s}
+.chip .material-symbols-outlined{font-size:19px;color:var(--blue)}
+.chip:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip:hover .material-symbols-outlined{color:var(--orange)}
+
+.help{margin-top:36px;color:var(--muted);font-size:15px}
+.help a{color:var(--blue);font-weight:700;border-bottom:2px solid var(--orange)}
+
+footer{position:relative;z-index:2;text-align:center;padding:20px;color:var(--muted);font-size:14px}
+
+@media(max-width:520px){.code{letter-spacing:-3px}.btn{width:100%;justify-content:center}.btns{width:100%}}
+@media(prefers-reduced-motion:reduce){.zero img{animation:none}}
+</style>
+</head>
+<body>
+<div class="bg"><span class="dots"></span><span class="ring"></span><span class="circle"></span></div>
+
+<div class="top">
+  <a href="index.html" class="logo"><img src="./src/logo.webp" alt="Solemate logo"></a>
+  <a href="index.html" class="back"><span class="material-symbols-outlined">arrow_back</span>Home</a>
+</div>
+
+<main>
+  <div class="code" aria-hidden="true">
+    <span>4</span>
+    <span class="zero"><span class="disc"></span><img id="shoe" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80" alt=""></span>
+    <span>4</span>
+  </div>
+
+  <h1>Oops, this pair walked off.</h1>
+  <p class="lead">We could not find the page you were looking for. It may have moved, or the link might be wrong. Let's get you back on track.</p>
+
+  <div class="btns">
+    <a href="index.html" class="btn btn-blue"><span class="material-symbols-outlined">home</span>Back to home</a>
+    <button class="btn btn-line" id="goBack"><span class="material-symbols-outlined">undo</span>Go back</button>
+  </div>
+
+ 
+
+
+
+
+<script>
+document.getElementById("goBack").addEventListener("click",()=>{
+  if(history.length>1){history.back();}else{window.location.href="index.html";}
+});
+// fallback for broken online image
+document.getElementById("shoe").addEventListener("error",function(){this.style.display="none";},{once:true});
+</script>
+</body>
+</html>
