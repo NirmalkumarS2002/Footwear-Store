@@ -120,6 +120,8 @@
         transition: transform .45s ease;
         box-shadow: 10px 0 40px rgba(0, 0, 0, .15);
         z-index: 9999;
+        width: 100%;
+        max-width:360px;
       }
 
       .nav.open {
