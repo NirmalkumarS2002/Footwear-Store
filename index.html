@@ -238,10 +238,21 @@ img{display:block;max-width:100%}
 .hero *,.rev-track,.rev-track .rev{animation:none !important;transition:none !important;transform:none !important;opacity:1 !important}
 .hero h1 .line>span{transform:none !important}
 }
+
+
   </style>
 </head>
 
-<body>
+<body class="is-loading">
+
+  <!-- PRELOADER -->
+  <div class="preloader" id="preloader">
+    <div class="loader-inner">
+      <div class="loader-logo"><img src="./src/logo.webp" alt="Solemate logo"></div>
+      <div class="loader-line"><span class="loader-fill" id="loaderFill"></span></div>
+      <span class="loader-num" id="loaderNum">0%</span>
+    </div>
+  </div>
 
   <header class="header">
     <div class="wrap">
@@ -629,6 +640,8 @@ img{display:block;max-width:100%}
   <script src="script.js"></script>
 
   <script>
+
+
     // hero: mouse parallax on shoe
     const stage = document.getElementById("heroStage"), shoeWrap = document.getElementById("shoeWrap");
     if (stage && !matchMedia("(prefers-reduced-motion: reduce)").matches) {

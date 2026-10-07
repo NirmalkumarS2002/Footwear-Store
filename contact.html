@@ -1317,7 +1317,16 @@
   </style>
 </head>
 
-<body>
+<body class="is-loading">
+
+  <!-- PRELOADER -->
+  <div class="preloader" id="preloader">
+    <div class="loader-inner">
+      <div class="loader-logo"><img src="./src/logo.webp" alt="Solemate logo"></div>
+      <div class="loader-line"><span class="loader-fill" id="loaderFill"></span></div>
+      <span class="loader-num" id="loaderNum">0%</span>
+    </div>
+  </div>
 
   <header class="header">
     <div class="wrap">
@@ -1576,7 +1585,15 @@
   </script>
   <script>
     // contact form validation
+
+ 
     (function () {
+
+         let conname=document.getElementById("cName");
+    conname.addEventListener("input", ()=>{
+      conname.value=conname.value.replace(/[^a-zA-Z\s]/g, "")
+    })
+    
       const f = document.getElementById("contactForm"), msg = document.getElementById("formMsg");
       const rules = { cName: v => v.trim().length >= 2,
          cPhone: v => /^[6-9]\d{9}$/.test(v.replace(/[\s-]/g, "")), 
